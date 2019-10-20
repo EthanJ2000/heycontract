@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity
 		initDialog();
 		
 		//Auto-Login
-		if (FirebaseBackend.auth.getCurrentUser() != null){
-			startActivity(new Intent(MainActivity.this,Dashboard.class));
-			finish();
-		}
+//		if (FirebaseBackend.auth.getCurrentUser() != null){
+//			startActivity(new Intent(MainActivity.this,Dashboard.class));
+//			finish();
+//		}
 		
 		//OnClicks
 		txtSignUp_SignIn.setOnClickListener(new View.OnClickListener()
