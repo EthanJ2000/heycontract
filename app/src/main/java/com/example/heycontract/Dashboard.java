@@ -155,7 +155,6 @@ public class Dashboard extends AppCompatActivity
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot)
 			{
 				if (dataSnapshot.exists()){
-					Log.i(TAG, "onDataChange: "+dataSnapshot.getValue());
 					userName_drawer.setText(dataSnapshot.getValue().toString());
 				}
 			}
