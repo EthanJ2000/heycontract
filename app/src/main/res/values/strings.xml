@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Renterr</string>
+
+    <!--Sign In-->
+    <string name="SignIn">Sign In</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="ForgotPassword">Forgot Password</string>
+    <string name="DontHave">Dont have an account</string>
+    <string name="SignUp">Sign Up</string>
+
+    <!--Sign Up-->
+    <string name="AccountType">Account Type</string>
+    <string name="Tenant">Tenant</string>
+    <string name="Landlord">Landlord</string>
+    <string name="Contractor">Contractor</string>
+    <string name="forgotTitle">Forgot Password</string>
+    <string name="forgotText">An email will be sent to you to create a new password.</string>
+
+    <string name="No">No</string>
+    <string name="Yes">Yes</string>
+
+    <string name="FullName">Full Name</string>
+    <string name="PhoneNumber">Phone Number</string>
+    <string name="ConfirmPassword">Confirm Password</string>
+
+    <string name="Categories">Categories</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="Profile">Profile</string>
+    <string name="Payment">Payment</string>
+    <string name="Invoices">Invoices</string>
+    <string name="InProgress">In Progress</string>
+    <string name="PendingRequests">Pending Request</string>
+    <string name="Setings">Settings</string>
+
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

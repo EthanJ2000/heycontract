@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_Profile"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/Profile" />
+        <item
+            android:id="@+id/nav_Payment"
+            android:icon="@drawable/ic_attach_money_black_24dp"
+            android:title="@string/Payment" />
+        <item
+            android:id="@+id/nav_Invoices"
+            android:icon="@drawable/ic_receipt_black_24dp"
+            android:title="@string/Invoices" />
+        <item
+            android:id="@+id/nav_InProgress"
+            android:icon="@drawable/ic_timelapse_black_24dp"
+            android:title="@string/InProgress" />
+        <item
+            android:id="@+id/nav_PendingRequests"
+            android:icon="@drawable/ic_timer_black_24dp"
+            android:title="@string/PendingRequests" />
+        <item
+            android:id="@+id/nav_Settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/Setings" />
+
+    </group>
+
+
+</menu>

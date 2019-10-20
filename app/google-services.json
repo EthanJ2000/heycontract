@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "480608666535",
+    "firebase_url": "https://hackathon-c13fa.firebaseio.com",
+    "project_id": "hackathon-c13fa",
+    "storage_bucket": "hackathon-c13fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480608666535:android:edfb0c07bfcde216066c82",
+        "android_client_info": {
+          "package_name": "com.example.heycontract"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480608666535-odo4u6jjh0e0iu0bq0coc2uc4dgp3t63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWkX3Jm1YH2ji8sufWMrp-rRUs4tQ-_VI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480608666535-odo4u6jjh0e0iu0bq0coc2uc4dgp3t63.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
