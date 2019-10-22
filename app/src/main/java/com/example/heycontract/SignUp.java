@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ public class SignUp extends AppCompatActivity
 	EditText edtPhoneNumber_SignUp;
 	EditText edtPassword_SignUp;
 	EditText edtConfirmPassword_SignUp;
+	ProgressBar loadingWheel_SignUp;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -32,6 +34,7 @@ public class SignUp extends AppCompatActivity
 		setContentView(R.layout.activity_sign_up);
 		
 		//Init
+		loadingWheel_SignUp = findViewById(R.id.loadingWheel_SignUp);
 		btnSignUp_SignUp = findViewById(R.id.btnSignUp_SignUp);
 		edtFullName_SignUp = findViewById(R.id.edtFullName_SignUp);
 		edtEmail_SignUp = findViewById(R.id.edtEmail_SignUp);
@@ -62,6 +65,7 @@ public class SignUp extends AppCompatActivity
 				}
 				else
 				{
+					loadingWheel_SignUp.setVisibility(View.VISIBLE);
 					createNewUser(edtEmail_SignUp.getText().toString().trim(),
 							edtPassword_SignUp.getText().toString().trim());
 				}
@@ -82,6 +86,7 @@ public class SignUp extends AppCompatActivity
 			{
 				if (!task.isSuccessful())
 				{
+					loadingWheel_SignUp.setVisibility(View.GONE);
 					String errorCode =
 							((FirebaseAuthException) task.getException()).getErrorCode();
 					switch (errorCode)
@@ -113,10 +118,11 @@ public class SignUp extends AppCompatActivity
 					String userID = FirebaseBackend.auth.getCurrentUser().getUid();
 					
 					User newUser = new User(userAccountType, fullName, email, phoneNumber);
-					FirebaseBackend.dbRef.child("users").child(userID).setValue(newUser);
+					FirebaseBackend.dbRef.child("users").child(userID).child("Profile").setValue(newUser);
 					
 					startActivity(new Intent(getApplicationContext(),Dashboard.class));
 					finish();
+					loadingWheel_SignUp.setVisibility(View.GONE);
 				}
 			}
 		});

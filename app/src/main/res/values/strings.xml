@@ -40,6 +40,10 @@
     <string name="PendingRequests">Pending Request</string>
     <string name="Setings">Settings</string>
 
+    <string name="Address">Address</string>
+    <string name="Settings">Settings</string>
+    <string name="SignOut">Sign Out</string>
+
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -47,9 +51,6 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

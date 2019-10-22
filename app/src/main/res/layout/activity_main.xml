@@ -7,6 +7,24 @@
     tools:context=".MainActivity"
     android:background="@drawable/background">
 
+    <ProgressBar
+        android:id="@+id/loadingWheel_Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="11dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/lightblue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView_SignIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView_SignIn" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="183dp"
@@ -104,6 +122,7 @@
                     android:background="@drawable/editbox"
                     android:hint="@string/Password"
                     android:inputType="textPassword"
+                    android:imeOptions="actionDone"
                     android:maxLines="1"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"

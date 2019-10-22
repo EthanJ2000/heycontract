@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
 	ImageButton btnYes_Dialog;
 	ImageButton btnLogin;
 	TextView btnNo_Text;
+	ProgressBar loadingWheel_Login;
 	public static MainActivity instance;
 	private static final String TAG = "MainActivity";
 	
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 		
 		//Init
 		instance = this;
+		loadingWheel_Login = findViewById(R.id.loadingWheel_Login);
 		edtEmail_SignIn = findViewById(R.id.edtEmail_SignIn);
 		edtPassword_SignIn = findViewById(R.id.edtPassword_SignIn);
 		txtSignUp_SignIn = findViewById(R.id.txtSignUp_SignIn);
@@ -47,10 +50,10 @@ public class MainActivity extends AppCompatActivity
 		initDialog();
 		
 		//Auto-Login
-//		if (FirebaseBackend.auth.getCurrentUser() != null){
-//			startActivity(new Intent(MainActivity.this,Dashboard.class));
-//			finish();
-//		}
+		if (FirebaseBackend.auth.getCurrentUser() != null){
+			startActivity(new Intent(MainActivity.this,Dashboard.class));
+			finish();
+		}
 		
 		//OnClicks
 		txtSignUp_SignIn.setOnClickListener(new View.OnClickListener()
@@ -68,12 +71,14 @@ public class MainActivity extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
+				loadingWheel_Login.setVisibility(View.VISIBLE);
 				String email = edtEmail_SignIn.getText().toString();
 				String password = edtPassword_SignIn.getText().toString();
 				if ((email.isEmpty()) && (password.isEmpty()))
 				{
 					Toast.makeText(getApplicationContext(), "Please enter all the fields.",
 							Toast.LENGTH_LONG).show();
+					loadingWheel_Login.setVisibility(View.GONE);
 				}
 				else
 				{
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity
 						{
 							if (!task.isSuccessful())
 							{
+								loadingWheel_Login.setVisibility(View.GONE);
 								String errorCode =
 										((FirebaseAuthException) (task.getException())).getErrorCode();
 								switch (errorCode)
@@ -100,6 +106,7 @@ public class MainActivity extends AppCompatActivity
 							}else{
 								startActivity(new Intent(MainActivity.this,Dashboard.class));
 								finish();
+								loadingWheel_Login.setVisibility(View.GONE);
 							}
 						}
 					});
