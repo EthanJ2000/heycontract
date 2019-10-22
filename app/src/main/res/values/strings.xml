@@ -52,5 +52,17 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
+    <string name="AddProperty">Add Property</string>
+    <string name="Properties">Properties</string>
+    <string name="Tenants">Tenants</string>
+    <string name="Jobs">Jobs</string>
+
+    <string name="NumBedrooms">Number of Bedrooms</string>
+    <string name="NumBathrooms">Number of Bathrooms</string>
+    <string name="NumGarages">Number of Garages</string>
+
+
+
+
 
 </resources>
