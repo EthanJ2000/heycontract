@@ -143,7 +143,7 @@ public class AddProperty extends Fragment
 										PropertyModel propertyModel = new PropertyModel(NewAddress,
 												numBedrooms, numBathrooms, numGarages,
 												downloadUrl);
-										FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Properties").setValue(propertyModel);
+										FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Properties").push().setValue(propertyModel);
 										loadingWheel_AddProperty.setVisibility(View.GONE);
 										
 										Properties properties = new Properties();
