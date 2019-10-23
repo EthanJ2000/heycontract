@@ -67,7 +67,7 @@ public class Properties extends Fragment
 		backend.initStorage();
 		
 		initArray();
-		
+		initPropertiesRecyclerView();
 		//OnClicks
 		fab_Add_Property.setOnClickListener(new View.OnClickListener()
 		{
@@ -94,6 +94,7 @@ public class Properties extends Fragment
 					loadingWheel_Properties.setVisibility(View.VISIBLE);
 					for (DataSnapshot child : dataSnapshot.getChildren()){
 						Log.i(TAG, "onChildAdded: "+child);
+						Log.i(TAG, "size: "+arrFeatures.size());
 						
 						switch (child.getKey()){
 							case "address":
@@ -112,8 +113,9 @@ public class Properties extends Fragment
 					
 					Log.i(TAG, "features: "+newModel.getFeature());
 					arrFeatures.add(newModel.getFeature());
+					Log.i(TAG, "arrayString: "+arrFeatures.toString());
 					
-					initPropertiesRecyclerView();
+					
 					loadingWheel_Properties.setVisibility(View.GONE);
 				}
 				

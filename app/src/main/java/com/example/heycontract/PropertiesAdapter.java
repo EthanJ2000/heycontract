@@ -1,6 +1,7 @@
 package com.example.heycontract;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.heycontract.Fragments.Properties;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,44 +56,15 @@ public class PropertiesAdapter extends RecyclerView.Adapter<PropertiesAdapter.Vi
 		backend.initAuth();
 		backend.initDB();
 		
-		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Properties").addChildEventListener(new ChildEventListener()
-		{
-			@Override
-			public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-			{
-				if (dataSnapshot.exists()){
-					for (DataSnapshot child : dataSnapshot.getChildren()){
-						if (child.getKey().equals("downloadUrl")){
-							Glide.with(context.getApplicationContext()).load(child.getValue()).into(holder.property_preview);
-						}
+		FirebaseBackend.storage.getReference().child(FirebaseBackend.auth.getCurrentUser().getEmail()).child("Properties").child(arrAddress.get(position)).getDownloadUrl()
+				.addOnSuccessListener(new OnSuccessListener<Uri>()
+				{
+					@Override
+					public void onSuccess(Uri uri)
+					{
+						Glide.with(context.getApplicationContext()).load(uri).into(holder.property_preview);
 					}
-				}
-			}
-			
-			@Override
-			public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-			{
-			
-			}
-			
-			@Override
-			public void onChildRemoved(@NonNull DataSnapshot dataSnapshot)
-			{
-			
-			}
-			
-			@Override
-			public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-			{
-			
-			}
-			
-			@Override
-			public void onCancelled(@NonNull DatabaseError databaseError)
-			{
-			
-			}
-		});
+				});
 		
 		holder.txtFeatures.setText(arrFeatures.get(position));
 		holder.txtAddress.setText(arrAddress.get(position));
