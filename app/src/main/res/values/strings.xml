@@ -63,8 +63,12 @@
     <string name="NumBathrooms">Number of Bathrooms</string>
     <string name="NumGarages">Number of Garages</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Vacant">Number of Garages</string>
+    <string name="Property">Property</string>
+    <string name="Status">Status</string>
+
+
+
 
 
 </resources>

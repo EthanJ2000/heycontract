@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class Tenants extends Fragment {
 	RecyclerView tenants_recyclerview;
 	FloatingActionButton fab_Tenants;
+	ProgressBar loadingWheel_Tenants;
 	private ArrayList<String> arrTenants = new ArrayList<>();
 	private ArrayList<String> arrAddresses = new ArrayList<>();
 	private static final String TAG = "Tenants";
@@ -46,10 +48,15 @@ public class Tenants extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		//Init
+		loadingWheel_Tenants = getView().findViewById(R.id.loadingWheel_Tenants);
+		loadingWheel_Tenants.setVisibility(View.VISIBLE);
 		tenants_recyclerview = getView().findViewById(R.id.tenants_recyclerview);
 		fab_Tenants = getView().findViewById(R.id.fab_Tenants);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initDB();
+		backend.initAuth();
 		initArray();
-		initTenantsRecyclerView();
+
 
 		//OnClicks
 		fab_Tenants.setOnClickListener(new View.OnClickListener() {
@@ -69,17 +76,24 @@ public class Tenants extends Fragment {
 			@Override
 			public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 				if (dataSnapshot.exists()) {
+					Log.i(TAG, "onChildAdded tenants: ");
 					for (DataSnapshot child : dataSnapshot.getChildren()) {
+						Log.i(TAG, "onChildAdded: "+child.getKey());
 						switch (child.getKey()){
 							case "address":
+								Log.i(TAG, "onChildAdded: called ");
+								Log.i(TAG, "onChildAdded value: "+child.getValue());
 								arrAddresses.add(child.getValue(String.class));
 								break;
 							case "fullName":
 								arrTenants.add(child.getValue(String.class));
-
+								break;
 						}
 					}
 				}
+
+				Log.i(TAG, "onChildAdded: "+arrAddresses);
+				initTenantsRecyclerView();
 			}
 
 			@Override
@@ -106,8 +120,11 @@ public class Tenants extends Fragment {
 
 	public void initTenantsRecyclerView(){
 		Log.i(TAG, "initTenantsRecyclerView: called");
+		Log.i(TAG, "initTenantsRecyclerView: "+arrAddresses);
+		PropertiesAdapter.type = 1;
 		PropertiesAdapter propertiesAdapter = new PropertiesAdapter(arrAddresses, arrTenants, getContext());
 		tenants_recyclerview.setAdapter(propertiesAdapter);
 		tenants_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+		loadingWheel_Tenants.setVisibility(View.GONE);
 	}
 }

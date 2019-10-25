@@ -1,5 +1,7 @@
 package com.example.heycontract;
 
+import com.example.heycontract.Fragments.Tenants;
+
 public class TenantModel {
 	String fullName;
 	String email;

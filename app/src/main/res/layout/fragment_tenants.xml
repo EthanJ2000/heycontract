@@ -7,7 +7,7 @@
     tools:context=".Fragments.Tenants">
 
     <ProgressBar
-        android:id="@+id/loadingWheel_Properties"
+        android:id="@+id/loadingWheel_Tenants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

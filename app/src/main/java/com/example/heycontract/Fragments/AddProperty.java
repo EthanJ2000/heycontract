@@ -129,6 +129,7 @@ public class AddProperty extends Fragment {
 										FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 										fragmentTransaction.replace(R.id.dashboard_fragment_container, properties);
 										fragmentTransaction.commit();
+										getActivity().getSupportFragmentManager().beginTransaction().remove(AddProperty.this);
 
 									}
 								}).addOnFailureListener(new OnFailureListener() {

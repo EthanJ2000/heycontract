@@ -31,6 +31,7 @@ public class Properties extends Fragment {
 	private ArrayList<String> arrFeatures = new ArrayList<>();
 	private ArrayList<String> arrAddress = new ArrayList<>();
 	private static final String TAG = "Properties";
+	public static Properties instance;
 
 	public Properties() {
 		// Required empty public constructor
@@ -49,6 +50,7 @@ public class Properties extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		//Init
+		instance = this;
 		loadingWheel_Properties = getView().findViewById(R.id.loadingWheel_Properties);
 		loadingWheel_Properties.setVisibility(View.VISIBLE);
 		properties_recyclerview = getView().findViewById(R.id.properties_recyclerview);
@@ -133,6 +135,7 @@ public class Properties extends Fragment {
 
 	public void initPropertiesRecyclerView() {
 		Log.i(TAG, "initPropertiesRecyclerView: called");
+		PropertiesAdapter.type = 0;
 		PropertiesAdapter propertiesAdapter = new PropertiesAdapter(arrFeatures, arrAddress, getContext());
 		properties_recyclerview.setAdapter(propertiesAdapter);
 		properties_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));

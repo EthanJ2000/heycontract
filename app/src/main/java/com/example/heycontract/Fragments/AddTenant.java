@@ -9,10 +9,10 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.heycontract.FirebaseBackend;
-import com.example.heycontract.PropertiesAdapter;
 import com.example.heycontract.R;
 import com.example.heycontract.TenantModel;
 import com.google.firebase.database.ChildEventListener;
@@ -120,11 +120,21 @@ public class AddTenant extends Fragment {
 				String email = edtEmail_AddTenant.getText().toString();
 				String phoneNumber = edtPhoneNumber_AddTenant.getText().toString();
 
-				if ((fullName.isEmpty())||(email.isEmpty())||(phoneNumber.isEmpty())||(spinnerSelection.isEmpty())){
-					Toast.makeText(getContext(),"Please fill in all the fields",Toast.LENGTH_SHORT).show();
-				}else{
-					TenantModel tenantModel = new TenantModel(fullName,email,phoneNumber,spinnerSelection);
-					FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Tenants").push().setValue(tenantModel);
+				if ((fullName.isEmpty()) || (email.isEmpty()) || (phoneNumber.isEmpty()) ||
+					(spinnerSelection.isEmpty())) {
+					Toast.makeText(getContext(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
+				} else {
+					TenantModel tenantModel = new TenantModel(fullName, email, phoneNumber, spinnerSelection);
+					FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child(
+							"Tenants").push().setValue(tenantModel);
+
+					Tenants tenants = new Tenants();
+					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+					FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+					fragmentTransaction.replace(R.id.dashboard_fragment_container, tenants);
+					fragmentTransaction.commit();
+					getActivity().getSupportFragmentManager().beginTransaction().remove(AddTenant.this);
+
 				}
 			}
 		});
