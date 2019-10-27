@@ -94,8 +94,9 @@
 
     <TextView
         android:id="@+id/txtStatus_PropertyInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/lblStatus"
         app:layout_constraintEnd_toEndOf="@+id/txtAddress_PropertyInfo"
@@ -116,9 +117,9 @@
 
     <TextView
         android:id="@+id/txtNumBedrooms_PropertyInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="230dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/lblNumBedrooms_PropertyInfo"
         app:layout_constraintStart_toEndOf="@+id/lblNumBedrooms_PropertyInfo"
@@ -137,9 +138,9 @@
 
     <TextView
         android:id="@+id/txtNumBathrooms_PropertyInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="235dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/lblNumBathrooms_PropertyInfo"
         app:layout_constraintStart_toEndOf="@+id/lblNumBathrooms_PropertyInfo"
@@ -158,8 +159,9 @@
 
     <TextView
         android:id="@+id/txtNumGarages_PropertyInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="210dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/lblNumGarages_PropertyInfo"
         app:layout_constraintEnd_toEndOf="@+id/txtNumBathrooms_PropertyInfo"

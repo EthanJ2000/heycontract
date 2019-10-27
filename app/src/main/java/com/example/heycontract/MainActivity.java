@@ -1,12 +1,21 @@
 package com.example.heycontract;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
 	ProgressBar loadingWheel_Login;
 	public static MainActivity instance;
 	private static final String TAG = "MainActivity";
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		//Init
 		instance = this;
 		loadingWheel_Login = findViewById(R.id.loadingWheel_Login);
@@ -40,13 +49,14 @@ public class MainActivity extends AppCompatActivity {
 		FirebaseBackend backend = new FirebaseBackend();
 		backend.initAuth();
 		initDialog();
-
+		
 		//Auto-Login
-		if (FirebaseBackend.auth.getCurrentUser() != null) {
+		if (FirebaseBackend.auth.getCurrentUser() != null)
+		{
 			startActivity(new Intent(MainActivity.this, Dashboard.class));
 			finish();
 		}
-
+		
 		//OnClicks
 		txtSignUp_SignIn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -54,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(new Intent(MainActivity.this, SignUpAs.class));
 			}
 		});
-
+		
 		btnLogin = findViewById(R.id.btnLogin);
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -62,40 +72,55 @@ public class MainActivity extends AppCompatActivity {
 				loadingWheel_Login.setVisibility(View.VISIBLE);
 				String email = edtEmail_SignIn.getText().toString();
 				String password = edtPassword_SignIn.getText().toString();
-				if ((email.isEmpty()) && (password.isEmpty())) {
+				if ((email.isEmpty()) && (password.isEmpty()))
+				{
 					Toast.makeText(getApplicationContext(), "Please enter all the fields.",
 							Toast.LENGTH_LONG).show();
 					loadingWheel_Login.setVisibility(View.GONE);
-				} else {
-					FirebaseBackend.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-						@Override
-						public void onComplete(@NonNull Task<AuthResult> task) {
-							if (!task.isSuccessful()) {
-								loadingWheel_Login.setVisibility(View.GONE);
-								String errorCode =
-										((FirebaseAuthException) (task.getException())).getErrorCode();
-								switch (errorCode) {
-									case "ERROR_WRONG_PASSWORD":
-										Toast.makeText(getApplicationContext(), "Invalid " +
-																				"Password.",
-												Toast.LENGTH_LONG).show();
-										break;
-									case "ERROR_USER_NOT_FOUND":
-										Toast.makeText(getApplicationContext(), "An account with that email does not exist.", Toast.LENGTH_LONG).show();
-										break;
+				}
+				else
+				{
+					if (isNetworkAvailable(getApplication()))
+					{
+						
+						FirebaseBackend.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+							@Override
+							public void onComplete(@NonNull Task<AuthResult> task) {
+								if (!task.isSuccessful())
+								{
+									loadingWheel_Login.setVisibility(View.GONE);
+									String errorCode =
+											((FirebaseAuthException) (task.getException())).getErrorCode();
+									switch (errorCode)
+									{
+										case "ERROR_WRONG_PASSWORD":
+											Toast.makeText(getApplicationContext(), "Invalid Password.", Toast.LENGTH_LONG).show();
+											break;
+										case "ERROR_USER_NOT_FOUND":
+											Toast.makeText(getApplicationContext(), "An account with that email does not exist.",
+													Toast.LENGTH_LONG).show();
+											break;
+									}
 								}
-							} else {
-								startActivity(new Intent(MainActivity.this, Dashboard.class));
-								finish();
-								loadingWheel_Login.setVisibility(View.GONE);
+								else
+								{
+									startActivity(new Intent(MainActivity.this, Dashboard.class));
+									finish();
+									loadingWheel_Login.setVisibility(View.GONE);
+								}
 							}
-						}
-					});
+						});
+						
+					}else{
+						loadingWheel_Login.setVisibility(View.GONE);
+						Toast.makeText(getApplicationContext(),"No network connection available",Toast.LENGTH_LONG).show();
+					}
+					
 				}
 			}
 		});
 	}
-
+	
 	public void initDialog() {
 		txtForgotPassword_SignIn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -114,5 +139,26 @@ public class MainActivity extends AppCompatActivity {
 				dialog.show();
 			}
 		});
+	}
+	
+	public static boolean isNetworkAvailable(Context con) {
+		try
+		{
+			ConnectivityManager cm = (ConnectivityManager) con.getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo networkInfo = null;
+			if (cm != null)
+			{
+				networkInfo = cm.getActiveNetworkInfo();
+			}
+			
+			if (networkInfo != null && networkInfo.isConnected())
+			{
+				return true;
+			}
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

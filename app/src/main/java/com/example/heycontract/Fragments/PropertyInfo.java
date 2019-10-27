@@ -59,8 +59,7 @@ public class PropertyInfo extends Fragment {
 		btnSaveChanges_PropertyInfo = getView().findViewById(R.id.btnSaveChanges_PropertyInfo);
 		btnListProperty = getView().findViewById(R.id.btnListProperty);
 		loadingWheel_PropertyInfo = getView().findViewById(R.id.loadingWheel_PropertyInfo);
-		property_picture_card_PropertyInfo =
-				getView().findViewById(R.id.property_picture_card_PropertyInfo);
+		property_picture_card_PropertyInfo = getView().findViewById(R.id.property_picture_card_PropertyInfo);
 		property_picture_PropertyInfo = getView().findViewById(R.id.property_picture_PropertyInfo);
 		txtAddress_PropertyInfo = getView().findViewById(R.id.txtAddress_PropertyInfo);
 		txtStatus_PropertyInfo = getView().findViewById(R.id.txtStatus_PropertyInfo);
