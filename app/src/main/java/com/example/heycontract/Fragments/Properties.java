@@ -117,7 +117,10 @@ public class Properties extends Fragment {
 
 			@Override
 			public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+				
+				if (dataSnapshot.exists()){
+					Log.i(TAG, "onChildRemoved: called");
+				}
 			}
 
 			@Override
@@ -135,7 +138,6 @@ public class Properties extends Fragment {
 
 	public void initPropertiesRecyclerView() {
 		Log.i(TAG, "initPropertiesRecyclerView: called");
-		PropertiesAdapter.type = 0;
 		PropertiesAdapter propertiesAdapter = new PropertiesAdapter(arrFeatures, arrAddress, getContext());
 		properties_recyclerview.setAdapter(propertiesAdapter);
 		properties_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));

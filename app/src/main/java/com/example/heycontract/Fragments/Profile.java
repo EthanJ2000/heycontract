@@ -1,6 +1,7 @@
 package com.example.heycontract.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,6 +17,8 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
 import com.bumptech.glide.Glide;
 import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.R;
@@ -44,8 +47,15 @@ public class Profile extends Fragment {
 	String email;
 	String phoneNumber;
 	String address;
+	private FragmentActivity profile;
 	private static final String TAG = "Profile";
-
+	
+	@Override
+	public void onAttach(@NonNull Context context) {
+		super.onAttach(context);
+		profile = getActivity();
+	}
+	
 	public Profile() {
 		// Required empty public constructor
 	}
@@ -168,7 +178,7 @@ public class Profile extends Fragment {
 			@Override
 			public void onSuccess(Uri uri) {
 				String url = uri.toString();
-				Glide.with(getActivity().getApplicationContext()).load(url).into(circleImageView);
+				Glide.with(profile).load(url).into(circleImageView);
 			}
 		}).addOnFailureListener(new OnFailureListener() {
 			@Override

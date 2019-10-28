@@ -71,9 +71,11 @@ public class AddTenant extends Fragment {
 				}
 
 				//Adapter for Spinner
-				ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),
-						android.R.layout.simple_spinner_dropdown_item, arrPropertyList);
-				address_spinner.setAdapter(spinnerAdapter);
+				if (getContext() != null){
+					ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),
+							android.R.layout.simple_spinner_dropdown_item, arrPropertyList);
+					address_spinner.setAdapter(spinnerAdapter);
+				}
 
 				//OnClicks
 				address_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

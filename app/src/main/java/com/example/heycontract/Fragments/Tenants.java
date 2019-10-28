@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.PropertiesAdapter;
 import com.example.heycontract.R;
+import com.example.heycontract.TenantAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -121,9 +122,8 @@ public class Tenants extends Fragment {
 	public void initTenantsRecyclerView(){
 		Log.i(TAG, "initTenantsRecyclerView: called");
 		Log.i(TAG, "initTenantsRecyclerView: "+arrAddresses);
-		PropertiesAdapter.type = 1;
-		PropertiesAdapter propertiesAdapter = new PropertiesAdapter(arrAddresses, arrTenants, getContext());
-		tenants_recyclerview.setAdapter(propertiesAdapter);
+		TenantAdapter tenantAdapter = new TenantAdapter(arrAddresses, arrTenants, getContext());
+		tenants_recyclerview.setAdapter(tenantAdapter);
 		tenants_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 		loadingWheel_Tenants.setVisibility(View.GONE);
 	}
