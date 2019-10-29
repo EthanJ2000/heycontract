@@ -1,5 +1,6 @@
 package com.example.heycontract;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	BottomNavigationView bottomNavigationView;
 	RelativeLayout dashboard_fragment_container;
 	ImageButton btnSettings;
+	ImageButton btnMessages_Dashboard;
 	private static final String TAG = "Dashboard";
 	
 	@Override
@@ -35,6 +37,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		setContentView(R.layout.activity_dashboard);
 		
 		//Init
+		btnMessages_Dashboard = findViewById(R.id.btnMessages_Dashboard);
 		bottomNavigationView = findViewById(R.id.bottomNavigationView);
 		dashboard_fragment_container = findViewById(R.id.dashboard_fragment_container);
 		btnSettings = findViewById(R.id.btnSettings_Dashboard);
@@ -53,6 +56,13 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 				fragmentTransaction.replace(R.id.dashboard_fragment_container, settings);
 				fragmentTransaction.commit();
+			}
+		});
+		
+		btnMessages_Dashboard.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(Dashboard.this,Messages.class));
 			}
 		});
 		
