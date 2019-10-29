@@ -1,16 +1,25 @@
 package com.example.heycontract;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
+import com.example.heycontract.Fragments.Jobs;
 import com.example.heycontract.Fragments.MessageFragmentOne;
 import com.example.heycontract.Fragments.MessageFragmentTwo;
+import com.example.heycontract.Fragments.Profile;
+import com.example.heycontract.Fragments.Properties;
+import com.example.heycontract.Fragments.Tenants;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 public class Messages extends AppCompatActivity {
@@ -20,6 +29,7 @@ public class Messages extends AppCompatActivity {
 	private TabLayout tabLayout;
 	private ImageButton btnBack_Messages;
 	private ImageButton btnSearch_Messages;
+	private RelativeLayout fragment_container;
 	private static final String TAG = "Messages";
 	
 	@Override
@@ -27,6 +37,7 @@ public class Messages extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_messages);
 		
+		fragment_container = findViewById(R.id.fragment_container);
 		btnBack_Messages = findViewById(R.id.btnBack_Messages);
 		btnSearch_Messages = findViewById(R.id.btnSearch_Messages);
 		viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -43,9 +54,10 @@ public class Messages extends AppCompatActivity {
 		btnBack_Messages.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Log.i(TAG, "onClick: back button clicked");
+				startActivity(new Intent(Messages.this,Dashboard.class));
 			}
 		});
+		
 		
 	}
 }
