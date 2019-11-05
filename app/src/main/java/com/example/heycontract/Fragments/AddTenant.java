@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.R;
-import com.example.heycontract.TenantModel;
+import com.example.heycontract.Models.TenantModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -1,7 +1,9 @@
 package com.example.heycontract.Fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +11,31 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.example.heycontract.API.APIInterface;
+import com.example.heycontract.API.APIPropertyModel;
+import com.example.heycontract.API.APIUtils;
 import com.example.heycontract.FirebaseBackend;
-import com.example.heycontract.PropertiesAdapter;
+import com.example.heycontract.Adapters.PropertiesAdapter;
 import com.example.heycontract.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PropertyInfo extends Fragment {
 	ProgressBar loadingWheel_PropertyInfo;
@@ -36,6 +48,15 @@ public class PropertyInfo extends Fragment {
 	TextView txtNumGarages_PropertyInfo;
 	ImageButton btnSaveChanges_PropertyInfo;
 	ImageButton btnListProperty;
+	APIInterface apiService;
+	
+	String listedBy;
+	String address;
+	String propertyType = "test";
+	int numBedrooms;
+	int numBathrooms;
+	int numGarages;
+	
 	private static final String TAG = "PropertyInfo";
 	
 	
@@ -56,6 +77,7 @@ public class PropertyInfo extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		//Init
+		apiService = APIUtils.getAPIService();
 		btnSaveChanges_PropertyInfo = getView().findViewById(R.id.btnSaveChanges_PropertyInfo);
 		btnListProperty = getView().findViewById(R.id.btnListProperty);
 		loadingWheel_PropertyInfo = getView().findViewById(R.id.loadingWheel_PropertyInfo);
@@ -70,7 +92,17 @@ public class PropertyInfo extends Fragment {
 		backend.initAuth();
 		backend.initStorage();
 		backend.initDB();
+		getUserFullName();
 		addInfo();
+		
+		//OnClicks
+		btnListProperty.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Log.i(TAG, "onClick: list clicked");
+				listProperty();
+			}
+		});
 	}
 	
 	public void addInfo() {
@@ -87,6 +119,7 @@ public class PropertyInfo extends Fragment {
 					}
 				});
 		
+		
 		//Add Info
 		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Properties").orderByChild("address").equalTo(PropertiesAdapter.address)
 				.addChildEventListener(new ChildEventListener() {
@@ -100,16 +133,20 @@ public class PropertyInfo extends Fragment {
 								switch (child.getKey())
 								{
 									case "address":
+										address = child.getValue(String.class);
 										txtAddress_PropertyInfo.setText(child.getValue(String.class));
 										break;
 									case "numberOfBedrooms":
+										numBedrooms = Integer.parseInt(child.getValue(String.class));
 										txtNumBedrooms_PropertyInfo.setText(child.getValue(String.class));
 										break;
 									
 									case "numberOfBathrooms":
+										numBathrooms = Integer.parseInt(child.getValue(String.class));
 										txtNumBathrooms_PropertyInfo.setText(child.getValue(String.class));
 										break;
 									case "numberOfGarages":
+										numGarages = Integer.parseInt(child.getValue(String.class));
 										txtNumGarages_PropertyInfo.setText(child.getValue(String.class));
 										break;
 								}
@@ -163,6 +200,61 @@ public class PropertyInfo extends Fragment {
 			}
 		});
 		
+	}
+	
+	public void listProperty(){
+		loadingWheel_PropertyInfo.setVisibility(View.VISIBLE);
+		APIPropertyModel apiPropertyModel = new APIPropertyModel(address,propertyType,numBedrooms,numBathrooms,numGarages,listedBy);
+		apiService.savePost(apiPropertyModel).subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<APIPropertyModel>() {
+			@Override
+			public void onCompleted() {
+				Toast.makeText(getContext(),"Posted Successfully",Toast.LENGTH_LONG).show();
+				Log.i(TAG, "onCompleted: Listed Successfully");
+				
+				FragmentManager fragmentManager = getFragmentManager();
+				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+				Properties properties = new Properties();
+				fragmentTransaction.replace(R.id.dashboard_fragment_container, properties);
+				fragmentTransaction.commit();
+				loadingWheel_PropertyInfo.setVisibility(View.GONE);
+				
+			}
+			
+			@Override
+			public void onError(Throwable e) {
+				Toast.makeText(getContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+				loadingWheel_PropertyInfo.setVisibility(View.GONE);
+				Log.e(TAG, "onError: ",e);
+			}
+			
+			@Override
+			public void onNext(APIPropertyModel apiPropertyModel) {
+			
+			}
+		});
+		
+	}
+	
+	public void getUserFullName(){
+		//Get User Full Name
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					for (DataSnapshot child : dataSnapshot.getChildren()) {
+						if (child.getKey().equals("FullName")){
+							listedBy = child.getValue(String.class);
+						}
+					}
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
 	}
 }
 

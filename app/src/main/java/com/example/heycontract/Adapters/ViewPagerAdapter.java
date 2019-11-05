@@ -1,4 +1,4 @@
-package com.example.heycontract;
+package com.example.heycontract.Adapters;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

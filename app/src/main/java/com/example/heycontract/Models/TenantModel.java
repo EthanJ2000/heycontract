@@ -1,4 +1,4 @@
-package com.example.heycontract;
+package com.example.heycontract.Models;
 
 import com.example.heycontract.Fragments.Tenants;
 

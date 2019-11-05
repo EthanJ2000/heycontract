@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.heycontract.FirebaseBackend;
-import com.example.heycontract.PropertyModel;
+import com.example.heycontract.Models.PropertyModel;
 import com.example.heycontract.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

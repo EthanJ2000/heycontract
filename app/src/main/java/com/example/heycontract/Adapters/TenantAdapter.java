@@ -1,4 +1,4 @@
-package com.example.heycontract;
+package com.example.heycontract.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -16,7 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.dynamic.IFragmentWrapper;
+import com.example.heycontract.FirebaseBackend;
+import com.example.heycontract.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
