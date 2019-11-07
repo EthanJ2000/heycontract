@@ -37,25 +37,26 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+@SuppressWarnings("All")
 public class PropertyInfo extends Fragment {
-	ProgressBar loadingWheel_PropertyInfo;
-	CardView property_picture_card_PropertyInfo;
-	ImageView property_picture_PropertyInfo;
-	TextView txtAddress_PropertyInfo;
-	TextView txtStatus_PropertyInfo;
-	TextView txtNumBedrooms_PropertyInfo;
-	TextView txtNumBathrooms_PropertyInfo;
-	TextView txtNumGarages_PropertyInfo;
-	ImageButton btnSaveChanges_PropertyInfo;
-	ImageButton btnListProperty;
-	APIInterface apiService;
+	private ProgressBar loadingWheel_PropertyInfo;
+	private CardView property_picture_card_PropertyInfo;
+	private ImageView property_picture_PropertyInfo;
+	private TextView txtAddress_PropertyInfo;
+	private TextView txtStatus_PropertyInfo;
+	private TextView txtNumBedrooms_PropertyInfo;
+	private TextView txtNumBathrooms_PropertyInfo;
+	private TextView txtNumGarages_PropertyInfo;
+	private ImageButton btnSaveChanges_PropertyInfo;
+	private ImageButton btnListProperty;
+	private APIInterface apiService;
 	
-	String listedBy;
-	String address;
-	String propertyType = "test";
-	int numBedrooms;
-	int numBathrooms;
-	int numGarages;
+	private String listedBy;
+	private String address;
+	private String propertyType = "test";
+	private int numBedrooms;
+	private int numBathrooms;
+	private int numGarages;
 	
 	private static final String TAG = "PropertyInfo";
 	

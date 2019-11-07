@@ -1,5 +1,6 @@
 package com.example.heycontract;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,12 +10,14 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.heycontract.Fragments.Home;
 import com.example.heycontract.Fragments.Jobs;
+import com.example.heycontract.Fragments.Notifications;
 import com.example.heycontract.Fragments.Profile;
 import com.example.heycontract.Fragments.Properties;
 import com.example.heycontract.Fragments.Settings;
@@ -29,7 +32,15 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	RelativeLayout dashboard_fragment_container;
 	ImageButton btnSettings;
 	ImageButton btnMessages_Dashboard;
+	ImageButton btnNotifications_Dashboard;
 	private static final String TAG = "Dashboard";
+	
+	//Fragments
+	public static Home home;
+	public static Settings settingsFragment;
+	public static Notifications notificationsFragment;
+	FragmentManager fragmentManager = getSupportFragmentManager();
+	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +48,14 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		setContentView(R.layout.activity_dashboard);
 		
 		//Init
+		btnNotifications_Dashboard = findViewById(R.id.btnNotifications_Dashboard);
 		btnMessages_Dashboard = findViewById(R.id.btnMessages_Dashboard);
 		bottomNavigationView = findViewById(R.id.bottomNavigationView);
 		dashboard_fragment_container = findViewById(R.id.dashboard_fragment_container);
 		btnSettings = findViewById(R.id.btnSettings_Dashboard);
 		InternetAvailabilityChecker.init(this);
-		InternetAvailabilityChecker mInternetAvailabilityChecker = InternetAvailabilityChecker.getInstance();
+		InternetAvailabilityChecker mInternetAvailabilityChecker =
+				InternetAvailabilityChecker.getInstance();
 		mInternetAvailabilityChecker.addInternetConnectivityListener(this);
 		final FirebaseBackend backend = new FirebaseBackend();
 		backend.initAuth();
@@ -51,10 +64,10 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		btnSettings.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Settings settings = new Settings();
-				FragmentManager fragmentManager = getSupportFragmentManager();
-				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-				fragmentTransaction.replace(R.id.dashboard_fragment_container, settings);
+				settingsFragment = new Settings();
+				fragmentManager = getSupportFragmentManager();
+				fragmentTransaction = fragmentManager.beginTransaction();
+				fragmentTransaction.replace(R.id.dashboard_fragment_container, settingsFragment);
 				fragmentTransaction.commit();
 			}
 		});
@@ -62,14 +75,23 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		btnMessages_Dashboard.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				startActivity(new Intent(Dashboard.this,Messages.class));
+				startActivity(new Intent(Dashboard.this, Messages.class));
+			}
+		});
+		
+		btnNotifications_Dashboard.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				notificationsFragment = new Notifications();
+				fragmentManager = getSupportFragmentManager();
+				fragmentTransaction = fragmentManager.beginTransaction();
+				fragmentTransaction.replace(R.id.dashboard_fragment_container, notificationsFragment);
+				fragmentTransaction.commit();
 			}
 		});
 		
 		//Add Home Fragment
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		final Home home = new Home();
+		home = new Home();
 		fragmentTransaction.add(R.id.dashboard_fragment_container, home);
 		fragmentTransaction.commit();
 		
@@ -124,14 +146,47 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		Log.i(TAG, "onInternetConnectivityChanged: called");
 		if (isConnected)
 		{
-				Snackbar.make(bottomNavigationView, "Connected", Snackbar.LENGTH_SHORT).show();
-				Log.i(TAG, "onInternetConnectivityChanged: connected");
+			Snackbar.make(bottomNavigationView, "Connected", Snackbar.LENGTH_SHORT).show();
+			Log.i(TAG, "onInternetConnectivityChanged: connected");
 		}
 		else
 		{
-			Snackbar.make(bottomNavigationView, "No network connection available", Snackbar.LENGTH_SHORT).show();
-				Log.i(TAG, "onInternetConnectivityChanged: not connected");
+			Snackbar.make(bottomNavigationView, "No network connection available",
+					Snackbar.LENGTH_SHORT).show();
+			Log.i(TAG, "onInternetConnectivityChanged: not connected");
 		}
-
+		
+	}
+	
+	
+	@Override
+	public void onBackPressed() {
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction fragmentTransaction = fm.beginTransaction();
+		if ((settingsFragment != null) && (settingsFragment.isVisible()))
+		{
+			Log.i(TAG, "onBackPressed: called");
+			fm = getSupportFragmentManager();
+			fragmentTransaction = fm.beginTransaction();
+			fragmentTransaction.replace(R.id.dashboard_fragment_container, home);
+			fragmentTransaction.commit();
+		} else if((notificationsFragment != null)&&(notificationsFragment.isVisible())){
+			fm = getSupportFragmentManager();
+			fragmentTransaction = fm.beginTransaction();
+			fragmentTransaction.replace(R.id.dashboard_fragment_container, home);
+			fragmentTransaction.commit();
+			
+		} else{
+			new AlertDialog.Builder(this)
+					.setMessage("Are you sure you want to exit?")
+					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Dashboard.super.onBackPressed();
+						}
+					})
+					.setNegativeButton("No", null)
+					.show();
+		}
 	}
 }

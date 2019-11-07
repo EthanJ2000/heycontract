@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -28,6 +31,7 @@ public class Properties extends Fragment {
 	ProgressBar loadingWheel_Properties;
 	RecyclerView properties_recyclerview;
 	FloatingActionButton fab_Add_Property;
+	private TextView txtNoProperties_Properties;
 	private ArrayList<String> arrFeatures = new ArrayList<>();
 	private ArrayList<String> arrAddress = new ArrayList<>();
 	private static final String TAG = "Properties";
@@ -51,6 +55,7 @@ public class Properties extends Fragment {
 
 		//Init
 		instance = this;
+		txtNoProperties_Properties = getView().findViewById(R.id.txtNoProperties_Properties);
 		loadingWheel_Properties = getView().findViewById(R.id.loadingWheel_Properties);
 		loadingWheel_Properties.setVisibility(View.VISIBLE);
 		properties_recyclerview = getView().findViewById(R.id.properties_recyclerview);
@@ -77,6 +82,8 @@ public class Properties extends Fragment {
 
 	public void initArray() {
 		final PropertyModel newModel = new PropertyModel();
+		
+		//Init array and listen for changes
 		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Properties").addChildEventListener(new ChildEventListener() {
 			@Override
 			public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -131,9 +138,26 @@ public class Properties extends Fragment {
 			@Override
 			public void onCancelled(@NonNull DatabaseError databaseError) {
 				Log.e(TAG, "onCancelled: ", databaseError.toException());
-				loadingWheel_Properties.setVisibility(View.GONE);
 			}
 		});
+		
+		//Check if data doesnt exist
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Properties").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (!dataSnapshot.exists()){
+					Log.i(TAG, "singlevalue: doesnt exist");
+					loadingWheel_Properties.setVisibility(View.GONE);
+					txtNoProperties_Properties.setVisibility(View.VISIBLE);
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
+		
 	}
 
 	public void initPropertiesRecyclerView() {

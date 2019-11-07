@@ -26,6 +26,11 @@ public class Messages extends AppCompatActivity {
 	private static final String TAG = "Messages";
 	
 	@Override
+	public void onBackPressed() {
+		startActivity(new Intent(this,Dashboard.class));
+	}
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_messages);
