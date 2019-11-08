@@ -36,6 +36,7 @@ import java.io.IOException;
 
 public class Profile extends Fragment {
 	ProgressBar loadingWheel_Profile;
+	ProgressBar loadingWheel_ProfilePicture;
 	ImageButton btnSaveChanges_Profile;
 	ImageButton btnChangeProfilePicture;
 	CircleImageView circleImageView;
@@ -72,7 +73,7 @@ public class Profile extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		//OnActivityResult start
 		super.onActivityResult(requestCode, resultCode, data);
-
+		loadingWheel_ProfilePicture.setVisibility(View.VISIBLE);
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == 1) {
 				Uri selectedImage = data.getData();
@@ -91,6 +92,7 @@ public class Profile extends Fragment {
 						public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 							Log.i(TAG, "Successfully updated profile picture");
 							circleImageView.setImageBitmap(bitmap);
+							loadingWheel_ProfilePicture.setVisibility(View.GONE);
 						}
 					}).addOnFailureListener(new OnFailureListener() {
 						@Override
@@ -113,6 +115,7 @@ public class Profile extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		//Init
+		loadingWheel_ProfilePicture = getView().findViewById(R.id.loadingWheel_ProfilePicture);
 		loadingWheel_Profile = getView().findViewById(R.id.loadingWheel_Profile);
 		btnSaveChanges_Profile = getView().findViewById(R.id.btnSaveChanges_Profile);
 		edtAddress_Profile = getView().findViewById(R.id.edtAddress_Profile);

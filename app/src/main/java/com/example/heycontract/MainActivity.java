@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 public class MainActivity extends AppCompatActivity {
 	EditText edtEmail_SignIn;
 	EditText edtPassword_SignIn;
+	EditText edtForgot_Email;
 	TextView txtForgotPassword_SignIn;
 	TextView txtSignUp_SignIn;
 	ImageButton btnYes_Dialog;
@@ -128,7 +129,26 @@ public class MainActivity extends AppCompatActivity {
 				final Dialog dialog = new Dialog(MainActivity.this);
 				dialog.setContentView(R.layout.forgot_dialog);
 				dialog.setTitle("Title");
+				edtForgot_Email = dialog.findViewById(R.id.edtForgot_Email);
 				btnYes_Dialog = dialog.findViewById(R.id.btnYes_Dialog);
+				btnYes_Dialog.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						String forgotEmail = edtForgot_Email.getText().toString();
+						FirebaseBackend.auth.sendPasswordResetEmail(forgotEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+							@Override
+							public void onComplete(@NonNull Task<Void> task) {
+								if (task.isSuccessful()){
+									Toast.makeText(getApplicationContext(),"Email sent",Toast.LENGTH_LONG).show();
+									dialog.dismiss();
+								}else {
+									Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+								}
+							}
+						});
+					}
+				});
+				
 				btnNo_Text = dialog.findViewById(R.id.btnNo_Text);
 				btnNo_Text.setOnClickListener(new View.OnClickListener() {
 					@Override

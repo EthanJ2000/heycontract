@@ -24,6 +24,9 @@ import com.example.heycontract.Fragments.Settings;
 import com.example.heycontract.Fragments.Tenants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.treebo.internetavailabilitychecker.InternetAvailabilityChecker;
 import com.treebo.internetavailabilitychecker.InternetConnectivityListener;
 
@@ -59,6 +62,9 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		mInternetAvailabilityChecker.addInternetConnectivityListener(this);
 		final FirebaseBackend backend = new FirebaseBackend();
 		backend.initAuth();
+		backend.initDB();
+		
+		inflateBottomNav();
 		
 		//OnClicks
 		btnSettings.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +144,47 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		});
 		
 		
+	}
+	
+	private void inflateBottomNav() {
+		String accountType = getAccountType();
+	}
+	
+	private String getAccountType() {
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid())
+				.child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					for (DataSnapshot child : dataSnapshot.getChildren()) {
+						if (child.getKey().equals("AccountType")){
+							switch (child.getValue(String.class)){
+								case "Landlord":
+									Log.i(TAG, "onDataChange: Landlord");
+									bottomNavigationView.inflateMenu(R.menu.bottom_nav_landlord);
+									break;
+								case "Tenant":
+									Log.i(TAG, "onDataChange: Tenant");
+									break;
+								case "Contractor":
+									Log.i(TAG, "onDataChange: Contractor");
+									break;
+							}
+						}
+					}
+				}else{
+					Log.i(TAG, "onDataChange: doesnt exist");
+				}
+				
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
+		
+		return null;
 	}
 	
 	

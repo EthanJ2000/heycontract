@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/txtForgot_Title"
@@ -34,7 +34,9 @@
         android:layout_marginTop="15dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/editbox"/>
+        android:paddingLeft="10dp"
+        android:background="@drawable/editbox"
+        android:textSize="20sp"/>
 
     <LinearLayout
         android:id="@+id/button_container_dialog"

@@ -96,7 +96,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
 
                     />
 
@@ -127,7 +127,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
