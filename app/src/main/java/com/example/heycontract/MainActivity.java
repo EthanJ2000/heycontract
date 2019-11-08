@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -137,12 +139,21 @@ public class MainActivity extends AppCompatActivity {
 						String forgotEmail = edtForgot_Email.getText().toString();
 						FirebaseBackend.auth.sendPasswordResetEmail(forgotEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
 							@Override
-							public void onComplete(@NonNull Task<Void> task) {
+							public void onComplete(@NonNull final Task<Void> task) {
 								if (task.isSuccessful()){
 									Toast.makeText(getApplicationContext(),"Email sent",Toast.LENGTH_LONG).show();
 									dialog.dismiss();
 								}else {
 									Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+									task.addOnFailureListener(new OnFailureListener() {
+										@Override
+										public void onFailure(@NonNull Exception e) {
+											String errorCode = ((FirebaseAuthException)task.getException()).getErrorCode();
+											if (errorCode.equals("ERROR_USER_NOT_FOUND")){
+												Toast.makeText(getApplicationContext(),"No user found",Toast.LENGTH_LONG).show();
+											}
+										}
+									});
 								}
 							}
 						});
