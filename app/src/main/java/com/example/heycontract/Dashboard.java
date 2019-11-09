@@ -161,6 +161,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 							switch (child.getValue(String.class)){
 								case "Landlord":
 									Log.i(TAG, "onDataChange: Landlord");
+									bottomNavigationView.getMenu().clear();
 									bottomNavigationView.inflateMenu(R.menu.bottom_nav_landlord);
 									break;
 								case "Tenant":

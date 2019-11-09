@@ -23,7 +23,13 @@ public class SignUp extends AppCompatActivity {
 	EditText edtPassword_SignUp;
 	EditText edtConfirmPassword_SignUp;
 	ProgressBar loadingWheel_SignUp;
-
+	
+	@Override
+	public void onBackPressed() {
+		startActivity(new Intent(this, SignUpAs.class));
+		finish();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

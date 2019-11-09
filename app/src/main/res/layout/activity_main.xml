@@ -75,10 +75,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/TIL_Email_SignIn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
+                android:clipChildren="false"
+                android:gravity="center_horizontal"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,16 +91,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="53dp"
                     android:background="@drawable/editbox"
+                    android:ellipsize="end"
                     android:hint="@string/Email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:ellipsize="end"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="20sp"
-
-                    />
+                    android:translationY="10dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,10 +107,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/TIL_Password_SignIn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
+                android:gravity="center_horizontal"
+                android:clipChildren="false"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,8 +125,9 @@
                     android:background="@drawable/editbox"
                     android:hint="@string/Password"
                     android:inputType="textPassword"
-                    android:imeOptions="actionDone"
-                    android:maxLines="1"
+                    android:imeOptions="actionGo"
+                    android:singleLine="true"
+                    android:translationY="10dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:textColor="@color/colorPrimaryDark"

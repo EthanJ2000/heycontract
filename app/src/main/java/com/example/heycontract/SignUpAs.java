@@ -17,7 +17,13 @@ public class SignUpAs extends AppCompatActivity {
 	RadioGroup radioGroup_SignUp;
 
 	private static final String TAG = "SignUpAs";
-
+	
+	@Override
+	public void onBackPressed() {
+		startActivity(new Intent(this, MainActivity.class));
+		finish();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
