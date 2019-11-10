@@ -21,6 +21,7 @@ import com.example.heycontract.Fragments.Jobs;
 import com.example.heycontract.Fragments.Notifications;
 import com.example.heycontract.Fragments.Profile;
 import com.example.heycontract.Fragments.Properties;
+import com.example.heycontract.Fragments.Requests;
 import com.example.heycontract.Fragments.Settings;
 import com.example.heycontract.Fragments.Tenants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -142,6 +143,12 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, profile);
 						fragmentTransaction.commit();
 						break;
+						
+					case R.id.bottomnav_requests:
+						Requests requests = new Requests();
+						fragmentTransaction.replace(R.id.dashboard_fragment_container, requests);
+						fragmentTransaction.commit();
+						
 				}
 				return true;
 			}
@@ -153,6 +160,44 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	
 	private void inflateBottomNav() {
 		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid())
+				.child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					for (DataSnapshot child : dataSnapshot.getChildren()) {
+						if (child.getKey().equals("AccountType")){
+							switch (child.getValue(String.class)){
+								case "Landlord":
+									Log.i(TAG, "onDataChange: Landlord");
+									bottomNavigationView.getMenu().clear();
+									bottomNavigationView.inflateMenu(R.menu.bottom_nav_landlord);
+									break;
+								case "Tenant":
+									Log.i(TAG, "onDataChange: Tenant");
+									bottomNavigationView.getMenu().clear();
+									bottomNavigationView.inflateMenu(R.menu.bottom_nav_tenant);
+									break;
+								case "Contractor":
+									Log.i(TAG, "onDataChange: Contractor");
+									bottomNavigationView.getMenu().clear();
+									bottomNavigationView.inflateMenu(R.menu.bottom_nav_contractor);
+									break;
+							}
+						}
+					}
+				}else{
+					Log.i(TAG, "onDataChange: doesnt exist");
+				}
+				
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
+		
+		FirebaseBackend.dbRef.child("contractors").child(FirebaseBackend.auth.getCurrentUser().getUid())
 				.child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

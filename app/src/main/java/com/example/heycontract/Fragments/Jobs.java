@@ -57,6 +57,7 @@ public class Jobs extends Fragment {
 		backend.initDB();
 		backend.initStorage();
 		initArray();
+		getAccountType();
 		
 		fragmentManager = getActivity().getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
@@ -75,8 +76,33 @@ public class Jobs extends Fragment {
 		
 	}
 	
+	private void getAccountType() {
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists())
+				{
+					for (DataSnapshot child : dataSnapshot.getChildren())
+					{
+						if (child.getKey().equals("AccountType"))
+						{
+							if (child.getValue().equals("Contractor"))
+							{
+								fab_Jobs.hide();
+							}
+						}
+					}
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
+	}
+	
 	public void initArray(){
-		
 		//Check if data doesnt exist
 		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Jobs").addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override

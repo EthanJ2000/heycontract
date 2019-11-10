@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:clipChildren="false"
         android:gravity="center_horizontal"
@@ -89,7 +89,7 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/editbox"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:clipChildren="false"
         android:gravity="center_horizontal"
@@ -138,15 +138,49 @@
             android:translationY="10dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TIL_ServicesOffered"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contractorspinner_container">
+
+        <EditText
+            android:id="@+id/edtServicesOffered"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/editbox"
+            android:ellipsize="end"
+            android:gravity="top"
+            android:hint="Services Offered (optional)"
+            android:inputType="textEmailAddress"
+            android:maxLines="5"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:translationY="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <ImageButton
         android:id="@+id/btnNext_ContractorSignUp"
-        android:layout_width="184dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="230dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/next_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.449"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contractorspinner_container" />
+        app:layout_constraintTop_toBottomOf="@+id/TIL_ServicesOffered" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

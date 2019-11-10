@@ -29,7 +29,12 @@ public class ContractorStepOne extends Fragment {
 	private EditText edtBusinessAddress;
 	private EditText edtBusinessName;
 	private EditText edtBusinessOwner;
-	private String spinnerSelection;
+	private EditText edtServicesOffered;
+	public static String spinnerSelection;
+	public static String ownerName;
+	public static String businessName;
+	public static String businessAddress;
+	public static String servicesOffered;
 	
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
@@ -51,6 +56,7 @@ public class ContractorStepOne extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		//Inits
+		edtServicesOffered = getView().findViewById(R.id.edtServicesOffered);
 		edtBusinessOwner = getView().findViewById(R.id.edtBusinessOwner);
 		edtBusinessAddress = getView().findViewById(R.id.edtBusinessAddress);
 		edtBusinessName = getView().findViewById(R.id.edtBusinessName);
@@ -76,10 +82,12 @@ public class ContractorStepOne extends Fragment {
 		btnNext_ContractorSignUp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				String businessName = edtBusinessName.getText().toString();
-				String businessAddress = edtBusinessAddress.getText().toString();
+				 businessName = edtBusinessName.getText().toString();
+				 businessAddress = edtBusinessAddress.getText().toString();
+				 ownerName = edtBusinessOwner.getText().toString();
+				 servicesOffered = edtServicesOffered.getText().toString();
 				
-				if ((businessName.isEmpty())||(businessAddress.isEmpty())||(spinnerSelection.isEmpty())){
+				if ((businessName.isEmpty())||(businessAddress.isEmpty())||(spinnerSelection.isEmpty())||(ownerName.isEmpty())){
 					Toast.makeText(getContext(),"Please enter all the fields",Toast.LENGTH_LONG).show();
 				}else {
 					ContractorStepTwo contractorStepTwo = new ContractorStepTwo();
