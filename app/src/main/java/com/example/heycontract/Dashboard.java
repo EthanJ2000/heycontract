@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.heycontract.Fragments.Categories;
 import com.example.heycontract.Fragments.Home;
 import com.example.heycontract.Fragments.Jobs;
 import com.example.heycontract.Fragments.Notifications;
@@ -39,6 +40,8 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	private static final String TAG = "Dashboard";
 	
 	//Fragments
+	public static Jobs jobs;
+	public static Categories categories;
 	public static Home home;
 	public static Settings settingsFragment;
 	public static Notifications notificationsFragment;
@@ -51,6 +54,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		setContentView(R.layout.activity_dashboard);
 		
 		//Init
+		categories = new Categories();
 		btnNotifications_Dashboard = findViewById(R.id.btnNotifications_Dashboard);
 		btnMessages_Dashboard = findViewById(R.id.btnMessages_Dashboard);
 		bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -128,7 +132,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 						break;
 					
 					case R.id.bottomnav_jobs:
-						Jobs jobs = new Jobs();
+						jobs = new Jobs();
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, jobs);
 						fragmentTransaction.commit();
 						break;
@@ -146,11 +150,8 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		
 	}
 	
-	private void inflateBottomNav() {
-		String accountType = getAccountType();
-	}
 	
-	private String getAccountType() {
+	private void inflateBottomNav() {
 		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid())
 				.child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
@@ -166,9 +167,13 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 									break;
 								case "Tenant":
 									Log.i(TAG, "onDataChange: Tenant");
+									bottomNavigationView.getMenu().clear();
+									bottomNavigationView.inflateMenu(R.menu.bottom_nav_tenant);
 									break;
 								case "Contractor":
 									Log.i(TAG, "onDataChange: Contractor");
+									bottomNavigationView.getMenu().clear();
+									bottomNavigationView.inflateMenu(R.menu.bottom_nav_contractor);
 									break;
 							}
 						}
@@ -184,8 +189,6 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			
 			}
 		});
-		
-		return null;
 	}
 	
 	
@@ -222,6 +225,12 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			fm = getSupportFragmentManager();
 			fragmentTransaction = fm.beginTransaction();
 			fragmentTransaction.replace(R.id.dashboard_fragment_container, home);
+			fragmentTransaction.commit();
+			
+		}else if((categories != null)&&(categories.isVisible())){
+			fm = getSupportFragmentManager();
+			fragmentTransaction = fm.beginTransaction();
+			fragmentTransaction.replace(R.id.dashboard_fragment_container,jobs);
 			fragmentTransaction.commit();
 			
 		} else{

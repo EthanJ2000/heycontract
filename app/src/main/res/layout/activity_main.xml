@@ -85,7 +85,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtSignIn">
-
                 <EditText
                     android:id="@+id/edtEmail_SignIn"
                     android:layout_width="match_parent"
@@ -100,7 +99,6 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="20sp"
                     android:translationY="10dp" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
 

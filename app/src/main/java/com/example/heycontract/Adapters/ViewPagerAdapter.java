@@ -36,10 +36,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 		String title = "";
 		switch (position){
 			case 1:
-				title = "Tenants";
+				title = titleList.get(position-1);
 				break;
 			case 2:
-				title = "Contractors";
+				title = titleList.get(position-1);
 				break;
 		}
 		return title;

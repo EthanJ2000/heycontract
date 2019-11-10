@@ -22,7 +22,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.bumptech.glide.Glide;
 import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.R;
-import com.example.heycontract.User;
+import com.example.heycontract.Models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;

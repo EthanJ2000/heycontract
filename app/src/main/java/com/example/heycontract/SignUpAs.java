@@ -2,6 +2,7 @@ package com.example.heycontract;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -52,12 +53,22 @@ public class SignUpAs extends AppCompatActivity {
 					Toast.makeText(getApplicationContext(), "Select an Account Type", Toast.LENGTH_LONG).show();
 				} else {
 					RadioButton selectedItem = findViewById(selectedID);
-					Intent intent = new Intent(SignUpAs.this, SignUp.class);
-					String accountType = (String) selectedItem.getText();
-					intent.putExtra("AccountType", accountType);
-					startActivity(intent);
-					finish();
-					MainActivity.instance.finish();
+					
+					if (selectedID == R.id.rbContractor_SignUp){
+						Intent intent = new Intent(SignUpAs.this, ContractorSignUp.class);
+						String accountType = (String) selectedItem.getText();
+						intent.putExtra("AccountType", accountType);
+						startActivity(intent);
+						finish();
+						MainActivity.instance.finish();
+					}else{
+						Intent intent = new Intent(SignUpAs.this, SignUp.class);
+						String accountType = (String) selectedItem.getText();
+						intent.putExtra("AccountType", accountType);
+						startActivity(intent);
+						finish();
+						MainActivity.instance.finish();
+					}
 				}
 			}
 		});

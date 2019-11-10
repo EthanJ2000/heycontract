@@ -4,84 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp">
-
-    <ProgressBar
-        android:id="@+id/loadingWheel_SignUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:elevation="11dp"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/lightblue"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtSignUp_SignUp"
-        android:text="@string/SignUp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="35sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".Fragments.ContractorStepOne">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TIL_FullName_SignUp"
+        android:id="@+id/TIL_Email_Contracto"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:clipChildren="false"
         android:gravity="center_horizontal"
         android:textColorHint="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSignUp_SignUp">
+        app:layout_constraintTop_toBottomOf="@+id/txtSignUp_SignUp2">
         <EditText
-            android:id="@+id/edtFullName_SignUp"
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:background="@drawable/editbox"
-            android:ellipsize="end"
-            android:hint="@string/FullName"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            android:translationY="10dp"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TIL_Email_SignUp"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:clipChildren="false"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:textColorHint="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TIL_FullName_SignUp">
-
-        <EditText
-            android:id="@+id/edtEmail_SignUp"
+            android:id="@+id/edtEmail_Contractor"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:background="@drawable/editbox"
@@ -93,24 +32,26 @@
             android:paddingRight="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
-            android:translationY="10dp"/>
+            android:translationY="10dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TIL_PhoneNumber_SignUp"
+        android:id="@+id/TIL_PhoneNumber_Contracto"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:clipChildren="false"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
         android:textColorHint="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TIL_Email_SignUp">
-
+        app:layout_constraintTop_toBottomOf="@+id/TIL_Email_Contracto">
         <EditText
-            android:id="@+id/edtPhoneNumber_SignUp"
+            android:id="@+id/edtPhoneNumber_Contractor"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:background="@drawable/editbox"
@@ -122,79 +63,79 @@
             android:paddingRight="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
-            android:translationY="10dp"/>
+            android:translationY="10dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TIL_Password_SignUp"
+        android:id="@+id/TIL_Password_Contracto"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:clipChildren="false"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
         android:textColorHint="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TIL_PhoneNumber_SignUp">
-
+        app:layout_constraintTop_toBottomOf="@+id/TIL_PhoneNumber_Contracto">
         <EditText
-            android:id="@+id/edtPassword_SignUp"
+            android:id="@+id/edtPassword_Contractor"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:background="@drawable/editbox"
             android:ellipsize="end"
             android:hint="@string/Password"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:maxLines="1"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
-            android:translationY="10dp"/>
+            android:translationY="10dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TIL_ConfirmPassword_SignUp"
+        android:id="@+id/TIL_ConfirmPassword_Contracto"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:clipChildren="false"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
         android:textColorHint="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TIL_Password_SignUp">
+        app:layout_constraintTop_toBottomOf="@+id/TIL_Password_Contracto">
 
         <EditText
-            android:id="@+id/edtConfirmPassword_SignUp"
+            android:id="@+id/edtConfirmPassword_Contractor"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:background="@drawable/editbox"
             android:ellipsize="end"
-            android:hint="@string/ConfirmPassword"
-            android:inputType="textPassword"
-            android:imeOptions="actionGo"
-            android:singleLine="true"
+            android:hint="@string/Password"
+            android:inputType="numberPassword"
+            android:maxLines="1"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
-            android:translationY="10dp"/>
+            android:translationY="10dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
-        android:id="@+id/btnSignUp_SignUp"
-        android:background="@drawable/signup_button"
+        android:id="@+id/btnSignUp_Contractor"
         android:layout_width="184dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/done_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TIL_ConfirmPassword_SignUp" />
-
-
-
+        app:layout_constraintTop_toBottomOf="@+id/TIL_ConfirmPassword_Contracto" />
 </androidx.constraintlayout.widget.ConstraintLayout>

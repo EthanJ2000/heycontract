@@ -1,4 +1,4 @@
-package com.example.heycontract;
+package com.example.heycontract.Models;
 
 public class User {
 	public String AccountType;

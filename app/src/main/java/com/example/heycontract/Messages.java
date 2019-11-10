@@ -1,5 +1,6 @@
 package com.example.heycontract;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -17,6 +19,9 @@ import com.example.heycontract.Fragments.MessageFragmentOne;
 import com.example.heycontract.Fragments.MessageFragmentTwo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class Messages extends AppCompatActivity {
 	private Toolbar toolbar;
@@ -52,10 +57,12 @@ public class Messages extends AppCompatActivity {
 		txtTitle = findViewById(R.id.txtTitle);
 		txtTitle.setText("Messages");
 		setSupportActionBar(toolbar);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initDB();
+		backend.initAuth();
 		
 		//Add account type check to change fragment titles
-		viewPagerAdapter.addFragment(new MessageFragmentOne(),"Tenants");
-		viewPagerAdapter.addFragment(new MessageFragmentTwo(),"Contractors");
+		addFragments();
 		
 		tabLayout = findViewById(R.id.tabs);
 		viewPager.setAdapter(viewPagerAdapter);
@@ -77,5 +84,47 @@ public class Messages extends AppCompatActivity {
 		});
 		
 		
+	}
+	
+	public void addFragments(){
+		Log.i(TAG, "addFragments: called");
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid())
+				.child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					for (DataSnapshot child : dataSnapshot.getChildren()) {
+						if (child.getKey().equals("AccountType")){
+							switch (child.getValue(String.class)){
+								case "Landlord":
+									viewPagerAdapter.addFragment(new MessageFragmentOne(),"Tenants");
+									viewPagerAdapter.addFragment(new MessageFragmentTwo(),"Contractors");
+									viewPagerAdapter.notifyDataSetChanged();
+									break;
+								case "Tenant":
+									Log.i(TAG, "onDataChange: tenants called");
+									viewPagerAdapter.addFragment(new MessageFragmentOne(),"Landlord");
+									viewPagerAdapter.addFragment(new MessageFragmentTwo(),"Contractors");
+									viewPagerAdapter.notifyDataSetChanged();
+									break;
+								case "Contractor":
+									viewPagerAdapter.addFragment(new MessageFragmentOne(),"Tenants");
+									viewPagerAdapter.addFragment(new MessageFragmentTwo(),"Landlords");
+									viewPagerAdapter.notifyDataSetChanged();
+									break;
+							}
+						}
+					}
+				}else{
+					Log.i(TAG, "onDataChange: doesnt exist");
+				}
+				
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
 	}
 }
