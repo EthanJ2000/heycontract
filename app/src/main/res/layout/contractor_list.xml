@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/recycler_parent_layout">
+    android:id="@+id/contractorRecycler_parent_layout">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
