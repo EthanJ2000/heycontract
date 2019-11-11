@@ -7,20 +7,33 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.heycontract.Adapters.ContractorsAdapter;
+import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.R;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class CategoryInfo extends Fragment {
 	
+	private ArrayList<String> arrBusinessNames = new ArrayList<>();
+	private ArrayList<String> arrPhoneNumbers = new ArrayList<>();
 	private RecyclerView categoryInfo_recyclerview;
 	private TextView lblCategoryTitle;
 	public static String categoryTitle;
+	private static final String TAG = "CategoryInfo";
 	
 	public CategoryInfo() {
 		// Required empty public constructor
@@ -41,15 +54,40 @@ public class CategoryInfo extends Fragment {
 		//Inits
 		lblCategoryTitle = getView().findViewById(R.id.lblCategoryTitle);
 		categoryInfo_recyclerview = getView().findViewById(R.id.categoryInfo_recyclerview);
+		initArray();
+		initRecyclerView();
 		
 		lblCategoryTitle.setText(categoryTitle);
 	}
 	
 	public void initArray(){
-	
+		Log.i(TAG, "initArray: "+categoryTitle);
+		//Get Business Name
+		FirebaseBackend.dbRef.child("users").orderByChild("Business Information").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					Log.i(TAG, "onDataChange: exists");
+					Log.i(TAG, "onDataChange: "+dataSnapshot);
+					if (dataSnapshot.exists())
+					{
+						
+					}
+				}else{
+					Log.i(TAG, "onDataChange: doesnt exist");
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
 	}
 	
 	public void initRecyclerView(){
-	
+		ContractorsAdapter contractorsAdapter = new ContractorsAdapter(arrBusinessNames,arrPhoneNumbers,getContext());
+		categoryInfo_recyclerview.setAdapter(contractorsAdapter);
+		categoryInfo_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 	}
 }

@@ -3,6 +3,7 @@ package com.example.heycontract.Fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -89,9 +90,9 @@ public class AddProperty extends Fragment {
 				final String numBedrooms = edtNumBedrooms.getText().toString();
 				final String numBathrooms = edtNumBathrooms.getText().toString();
 				final String numGarages = edtNumGarages.getText().toString();
-
+				
 				if ((NewAddress.isEmpty()) || (numBedrooms.isEmpty()) || (numBathrooms.isEmpty()) ||
-					(numGarages.isEmpty())) {
+					(numGarages.isEmpty())||(property_picture.getDrawable()==null)) {
 					Toast.makeText(getContext(), "Please enter all the fields", Toast.LENGTH_LONG).show();
 				} else {
 					Log.i(TAG, "onClick: " + NewAddress);
