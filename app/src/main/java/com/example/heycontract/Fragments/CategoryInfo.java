@@ -44,4 +44,12 @@ public class CategoryInfo extends Fragment {
 		
 		lblCategoryTitle.setText(categoryTitle);
 	}
+	
+	public void initArray(){
+	
+	}
+	
+	public void initRecyclerView(){
+	
+	}
 }

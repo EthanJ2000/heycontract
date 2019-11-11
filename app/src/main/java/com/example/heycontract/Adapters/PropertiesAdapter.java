@@ -77,12 +77,7 @@ public class PropertiesAdapter extends RecyclerView.Adapter<PropertiesAdapter.Vi
 						}
 					});
 		
-		
-//		if (type == 1)
-//		{
-//			Log.i(TAG, "onBindViewHolder tenant called");
-//			Glide.with(context.getApplicationContext()).load(R.drawable.default_icon).into(holder.property_preview);
-//		}
+			
 		
 		holder.txtFeatures.setText(arrFeatures.get(position));
 		holder.txtAddress.setText(arrAddress.get(position));
