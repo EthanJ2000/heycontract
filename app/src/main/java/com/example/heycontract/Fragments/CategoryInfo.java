@@ -36,6 +36,7 @@ public class CategoryInfo extends Fragment {
 	private ArrayList<String> arrPhoneNumbers = new ArrayList<>();
 	private RecyclerView categoryInfo_recyclerview;
 	private TextView lblCategoryTitle;
+	private TextView txtNoContractors;
 	public static String categoryTitle;
 	private static final String TAG = "CategoryInfo";
 	
@@ -56,24 +57,27 @@ public class CategoryInfo extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		//Inits
+		txtNoContractors = getView().findViewById(R.id.txtNoContractors);
 		lblCategoryTitle = getView().findViewById(R.id.lblCategoryTitle);
 		categoryInfo_recyclerview = getView().findViewById(R.id.categoryInfo_recyclerview);
 		arrBusinessNames.clear();
 		arrPhoneNumbers.clear();
 		initArray();
-		
+//		if (arrBusinessNames.size() == 0){
+//			txtNoContractors.setVisibility(View.VISIBLE);
+//		}
 		
 		lblCategoryTitle.setText(categoryTitle);
 	}
 	
 	public void initArray(){
-		Log.i(TAG, "initArray: "+categoryTitle);
 		getBusinessNames();
 		getPhoneNumber();
-		Log.i(TAG, "initArray: "+arrBusinessNames.size());
 	}
 	
 	private void getPhoneNumber() {
+		//add check for type of contractor
+		final String[] typeOf = new String[1];
 		FirebaseBackend.dbRef.child("users").orderByChild("Business Information").addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -83,15 +87,15 @@ public class CategoryInfo extends Fragment {
 							@Override
 							public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 								if (dataSnapshot.exists()){
-									Log.i(TAG, "contractors: "+dataSnapshot);
 									if (dataSnapshot.hasChild("Business Information")){
 										for (DataSnapshot child : dataSnapshot.getChildren()) {
-											Log.i(TAG, "binfo: "+child);
-											if (child.getKey().equals("Profile")){
-												Log.i(TAG, "binpow: "+child.getValue());
+											if (child.getKey().equals("Business Information")){
+												Map<String,String> infoMap = (Map<String, String>)child.getValue();
+												typeOf[0] = infoMap.get("typeOfContractor");
+											}
+											if ((child.getKey().equals("Profile"))&&(typeOf[0].equals(categoryTitle))){
 												Map<String,String> userMap = (Map<String, String>)child.getValue();
-												arrPhoneNumbers.add(userMap.get("PhoneNumber"));
-												Log.i(TAG, "arrPhoneNumbers: "+arrPhoneNumbers.size());
+												arrPhoneNumbers.add(userMap.get("phoneNumber"));
 												initRecyclerView();
 											}
 										}
@@ -129,14 +133,11 @@ public class CategoryInfo extends Fragment {
 							@Override
 							public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 								if (dataSnapshot.exists()){
-									Log.i(TAG, "contractors: "+dataSnapshot);
 									for (DataSnapshot child : dataSnapshot.getChildren()) {
 										if (child.getKey().equals("Business Information")){
 											ContractorModel contractorModel = child.getValue(ContractorModel.class);
 											if (contractorModel.getTypeOfContractor().equals(categoryTitle)){
-												Log.i(TAG, "onDataChange: "+contractorModel.getBusinessName());
 												arrBusinessNames.add(contractorModel.getBusinessName());
-												Log.i(TAG, "arrBusinessNames: "+arrBusinessNames.size());
 											}
 											
 										}

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.heycontract.Fragments.BusinessProfile;
 import com.example.heycontract.Fragments.Categories;
 import com.example.heycontract.Fragments.CategoryInfo;
 import com.example.heycontract.Fragments.Home;
@@ -42,6 +43,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	private static final String TAG = "Dashboard";
 	
 	//Fragments
+	public static BusinessProfile businessProfile;
 	public static CategoryInfo categoryInfo;
 	public static Jobs jobs;
 	public static Categories categories;
@@ -57,6 +59,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		setContentView(R.layout.activity_dashboard);
 		
 		//Init
+		businessProfile = new BusinessProfile();
 		categoryInfo = new CategoryInfo();
 		categories = new Categories();
 		btnNotifications_Dashboard = findViewById(R.id.btnNotifications_Dashboard);
@@ -285,6 +288,11 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			fm = getSupportFragmentManager();
 			fragmentTransaction = fm.beginTransaction();
 			fragmentTransaction.replace(R.id.dashboard_fragment_container,categories);
+			fragmentTransaction.commit();
+		}else if((businessProfile!=null)&&(businessProfile.isVisible())){
+			fm = getSupportFragmentManager();
+			fragmentTransaction = fm.beginTransaction();
+			fragmentTransaction.replace(R.id.dashboard_fragment_container,categoryInfo);
 			fragmentTransaction.commit();
 		}
 		else{
