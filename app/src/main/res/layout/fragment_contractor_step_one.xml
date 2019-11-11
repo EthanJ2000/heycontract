@@ -23,7 +23,7 @@
         <EditText
             android:id="@+id/edtBusinessName"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="50dp"
             android:background="@drawable/editbox"
             android:ellipsize="end"
             android:hint="Business Name"
@@ -173,9 +173,9 @@
 
     <ImageButton
         android:id="@+id/btnNext_ContractorSignUp"
-        android:layout_width="230dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="229dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/next_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.449"

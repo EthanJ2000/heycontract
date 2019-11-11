@@ -4,8 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@drawable/background">
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/profileTopPanel"
+        android:layout_width="420dp"
+        android:layout_height="300dp"
+        android:background="@drawable/topbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/loadingWheel_Login"
@@ -107,10 +115,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:gravity="center_horizontal"
                 android:clipChildren="false"
+                android:gravity="center_horizontal"
                 android:textColorHint="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,14 +130,14 @@
                     android:layout_height="53dp"
                     android:background="@drawable/editbox"
                     android:hint="@string/Password"
-                    android:inputType="textPassword"
                     android:imeOptions="actionGo"
-                    android:singleLine="true"
-                    android:translationY="10dp"
+                    android:inputType="textPassword"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
+                    android:singleLine="true"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:translationY="10dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -164,9 +172,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
-                android:text="@string/DontHave"
+                android:text="Dont have an account?"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -180,10 +188,12 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/SignUp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="23sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtDontHave" />

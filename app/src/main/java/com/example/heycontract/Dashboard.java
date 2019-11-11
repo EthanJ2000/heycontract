@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.heycontract.Fragments.Categories;
+import com.example.heycontract.Fragments.CategoryInfo;
 import com.example.heycontract.Fragments.Home;
 import com.example.heycontract.Fragments.Jobs;
 import com.example.heycontract.Fragments.Notifications;
@@ -41,6 +42,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	private static final String TAG = "Dashboard";
 	
 	//Fragments
+	public static CategoryInfo categoryInfo;
 	public static Jobs jobs;
 	public static Categories categories;
 	public static Home home;
@@ -55,6 +57,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		setContentView(R.layout.activity_dashboard);
 		
 		//Init
+		categoryInfo = new CategoryInfo();
 		categories = new Categories();
 		btnNotifications_Dashboard = findViewById(R.id.btnNotifications_Dashboard);
 		btnMessages_Dashboard = findViewById(R.id.btnMessages_Dashboard);
@@ -278,7 +281,13 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			fragmentTransaction.replace(R.id.dashboard_fragment_container,jobs);
 			fragmentTransaction.commit();
 			
-		} else{
+		} else if((categoryInfo != null) && (categoryInfo.isVisible())){
+			fm = getSupportFragmentManager();
+			fragmentTransaction = fm.beginTransaction();
+			fragmentTransaction.replace(R.id.dashboard_fragment_container,categories);
+			fragmentTransaction.commit();
+		}
+		else{
 			new AlertDialog.Builder(this)
 					.setMessage("Are you sure you want to exit?")
 					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

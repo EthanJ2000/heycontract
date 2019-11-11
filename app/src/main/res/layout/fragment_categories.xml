@@ -31,86 +31,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnCarpeting"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="0"
             android:layout_column="0"
             android:layout_margin="10dp"
-            android:background="@drawable/button_carpeting" />
+            android:background="@drawable/button_carpeting"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnCarpenting"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="0"
             android:layout_column="1"
             android:layout_margin="10dp"
-            android:background="@drawable/button_carpentry" />
+            android:background="@drawable/button_carpentry"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnCleaning"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="0"
             android:layout_column="2"
             android:layout_margin="10dp"
-            android:background="@drawable/button_cleaning" />
+            android:background="@drawable/button_cleaning"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnElectrician"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="1"
             android:layout_column="0"
             android:layout_margin="10dp"
-            android:background="@drawable/button_electrician" />
+            android:background="@drawable/button_electrician"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnLandscaping"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="1"
             android:layout_column="1"
             android:layout_margin="10dp"
-            android:background="@drawable/button_landscaping" />
+            android:background="@drawable/button_landscaping"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnPainter"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="1"
             android:layout_column="2"
             android:layout_margin="10dp"
-            android:background="@drawable/button_painter" />
+            android:background="@drawable/button_painter"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnPlumber"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="2"
             android:layout_column="0"
             android:layout_margin="10dp"
-            android:background="@drawable/button_plumber" />
+            android:background="@drawable/button_plumber"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnRoofing"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="2"
             android:layout_column="1"
             android:layout_margin="10dp"
-            android:background="@drawable/butto_roofing" />
+            android:background="@drawable/butto_roofing"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnTiling"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_row="2"
             android:layout_column="2"
             android:layout_margin="10dp"
-            android:background="@drawable/button_tiling" />
+            android:background="@drawable/button_tiling"/>
 
     </GridLayout>
 
