@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.heycontract.Adapters.ContractorsAdapter;
 import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.Models.ContractorModel;
+import com.example.heycontract.Models.User;
 import com.example.heycontract.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +28,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CategoryInfo extends Fragment {
 	
@@ -56,8 +58,10 @@ public class CategoryInfo extends Fragment {
 		//Inits
 		lblCategoryTitle = getView().findViewById(R.id.lblCategoryTitle);
 		categoryInfo_recyclerview = getView().findViewById(R.id.categoryInfo_recyclerview);
+		arrBusinessNames.clear();
+		arrPhoneNumbers.clear();
 		initArray();
-		initRecyclerView();
+		
 		
 		lblCategoryTitle.setText(categoryTitle);
 	}
@@ -66,9 +70,53 @@ public class CategoryInfo extends Fragment {
 		Log.i(TAG, "initArray: "+categoryTitle);
 		getBusinessNames();
 		getPhoneNumber();
+		Log.i(TAG, "initArray: "+arrBusinessNames.size());
 	}
 	
 	private void getPhoneNumber() {
+		FirebaseBackend.dbRef.child("users").orderByChild("Business Information").addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					for (DataSnapshot child : dataSnapshot.getChildren()) {
+						FirebaseBackend.dbRef.child("users").child(child.getKey()).addValueEventListener(new ValueEventListener() {
+							@Override
+							public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+								if (dataSnapshot.exists()){
+									Log.i(TAG, "contractors: "+dataSnapshot);
+									if (dataSnapshot.hasChild("Business Information")){
+										for (DataSnapshot child : dataSnapshot.getChildren()) {
+											Log.i(TAG, "binfo: "+child);
+											if (child.getKey().equals("Profile")){
+												Log.i(TAG, "binpow: "+child.getValue());
+												Map<String,String> userMap = (Map<String, String>)child.getValue();
+												arrPhoneNumbers.add(userMap.get("PhoneNumber"));
+												Log.i(TAG, "arrPhoneNumbers: "+arrPhoneNumbers.size());
+												initRecyclerView();
+											}
+										}
+									}
+								}else {
+									Log.i(TAG, "onDataChange: doesnt exist");
+								}
+							}
+							
+							@Override
+							public void onCancelled(@NonNull DatabaseError databaseError) {
+							
+							}
+						});
+					}
+				}else {
+					Log.i(TAG, "onDataChange: doesnt exist");
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
 	}
 	
 	private void getBusinessNames() {
@@ -81,12 +129,14 @@ public class CategoryInfo extends Fragment {
 							@Override
 							public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 								if (dataSnapshot.exists()){
+									Log.i(TAG, "contractors: "+dataSnapshot);
 									for (DataSnapshot child : dataSnapshot.getChildren()) {
 										if (child.getKey().equals("Business Information")){
 											ContractorModel contractorModel = child.getValue(ContractorModel.class);
 											if (contractorModel.getTypeOfContractor().equals(categoryTitle)){
 												Log.i(TAG, "onDataChange: "+contractorModel.getBusinessName());
 												arrBusinessNames.add(contractorModel.getBusinessName());
+												Log.i(TAG, "arrBusinessNames: "+arrBusinessNames.size());
 											}
 											
 										}

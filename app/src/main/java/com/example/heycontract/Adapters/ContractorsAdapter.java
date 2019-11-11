@@ -45,6 +45,7 @@ public class ContractorsAdapter extends RecyclerView.Adapter<ContractorsAdapter.
 	
 	@Override
 	public void onBindViewHolder(@NonNull final Viewholder holder, int position) {
+		Log.i(TAG, "onBindViewHolder: called");
 		FirebaseBackend backend = new FirebaseBackend();
 		backend.initStorage();
 		backend.initAuth();
@@ -69,7 +70,7 @@ public class ContractorsAdapter extends RecyclerView.Adapter<ContractorsAdapter.
 	
 	@Override
 	public int getItemCount() {
-		return 0;
+		return arrBusinessNames.size();
 	}
 	
 	public class Viewholder extends RecyclerView.ViewHolder {
@@ -79,6 +80,9 @@ public class ContractorsAdapter extends RecyclerView.Adapter<ContractorsAdapter.
 			
 		public Viewholder(@NonNull View itemView) {
 			super(itemView);
+			business_preview = itemView.findViewById(R.id.business_preview);
+			txtBusinessName = itemView.findViewById(R.id.txtBusinessName);
+			txtPhoneNumber = itemView.findViewById(R.id.txtPhoneNumber);
 		}
 	}
 }
