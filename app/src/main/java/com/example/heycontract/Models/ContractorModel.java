@@ -1,6 +1,9 @@
 package com.example.heycontract.Models;
 
 public class ContractorModel {
+	public ContractorModel() {
+	}
+	
 	String businessName;
 	String typeOfContractor;
 	String servicesOffered;

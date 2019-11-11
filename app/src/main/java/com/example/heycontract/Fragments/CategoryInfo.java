@@ -18,10 +18,12 @@ import android.widget.TextView;
 
 import com.example.heycontract.Adapters.ContractorsAdapter;
 import com.example.heycontract.FirebaseBackend;
+import com.example.heycontract.Models.ContractorModel;
 import com.example.heycontract.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -62,18 +64,45 @@ public class CategoryInfo extends Fragment {
 	
 	public void initArray(){
 		Log.i(TAG, "initArray: "+categoryTitle);
-		//Get Business Name
-		FirebaseBackend.dbRef.child("users").orderByChild("Business Information").addListenerForSingleValueEvent(new ValueEventListener() {
+		getBusinessNames();
+		getPhoneNumber();
+	}
+	
+	private void getPhoneNumber() {
+	}
+	
+	private void getBusinessNames() {
+		FirebaseBackend.dbRef.child("users").orderByChild("Business Information").addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 				if (dataSnapshot.exists()){
-					Log.i(TAG, "onDataChange: exists");
-					Log.i(TAG, "onDataChange: "+dataSnapshot);
-					if (dataSnapshot.exists())
-					{
-						
+					for (DataSnapshot child : dataSnapshot.getChildren()) {
+						FirebaseBackend.dbRef.child("users").child(child.getKey()).addValueEventListener(new ValueEventListener() {
+							@Override
+							public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+								if (dataSnapshot.exists()){
+									for (DataSnapshot child : dataSnapshot.getChildren()) {
+										if (child.getKey().equals("Business Information")){
+											ContractorModel contractorModel = child.getValue(ContractorModel.class);
+											if (contractorModel.getTypeOfContractor().equals(categoryTitle)){
+												Log.i(TAG, "onDataChange: "+contractorModel.getBusinessName());
+												arrBusinessNames.add(contractorModel.getBusinessName());
+											}
+											
+										}
+									}
+								}else {
+									Log.i(TAG, "onDataChange: doesnt exist");
+								}
+							}
+							
+							@Override
+							public void onCancelled(@NonNull DatabaseError databaseError) {
+							
+							}
+						});
 					}
-				}else{
+				}else {
 					Log.i(TAG, "onDataChange: doesnt exist");
 				}
 			}
