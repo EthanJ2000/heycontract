@@ -11,12 +11,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.heycontract.R;
 
 public class BusinessProfile extends Fragment {
 	
+	private ImageButton btnCall;
+	private ImageButton btnRequestAQuote;
+	private TextView txtServices;
 	private TextView txtBusinessName_Profile;
 	public static String businessName;
 	
@@ -37,6 +41,9 @@ public class BusinessProfile extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		//Inits
+		btnCall = getView().findViewById(R.id.btnCall);
+		btnRequestAQuote = getView().findViewById(R.id.btnRequestAQuote);
+		txtServices = getView().findViewById(R.id.txtServices);
 		txtBusinessName_Profile = getView().findViewById(R.id.txtBusinessName_Profile);
 		txtBusinessName_Profile.setText(businessName);
 	}
