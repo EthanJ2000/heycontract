@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.heycontract.Adapters.RequestAdapter;
 import com.example.heycontract.Dashboard;
 import com.example.heycontract.FirebaseBackend;
+import com.example.heycontract.Models.ContractorModel;
 import com.example.heycontract.Models.RequestModel;
 import com.example.heycontract.R;
 import com.google.firebase.database.ChildEventListener;
@@ -33,6 +34,7 @@ public class Requests extends Fragment {
 	private ArrayList<String> arrRequests = new ArrayList<>();
 	public String accountType;
 	private TextView txtNoRequests_Requests;
+	public static String businessName;
 	private static final String TAG = "Requests";
 	
 	public Requests() {
@@ -55,6 +57,8 @@ public class Requests extends Fragment {
 	
 	private void init() {
 		getAccountType();
+		getBusinessName();
+		arrRequests.clear();
 		txtNoRequests_Requests = getView().findViewById(R.id.txtNoRequests_Requests);
 		requests_recyclerview = getView().findViewById(R.id.requests_recyclerview);
 		FirebaseBackend backend = new FirebaseBackend();
@@ -101,10 +105,8 @@ public class Requests extends Fragment {
 						Log.i(TAG, "requester: "+newRequestModel.getRequester());
 						Log.i(TAG, "accounttypeinfo: "+accountType);
 						if (Dashboard.accountType!=null){
-							if (Dashboard.accountType.equals("Contractor")){
+							if (Dashboard.accountType.equals("Contractor")&&(newRequestModel.getContractorName().equals(businessName))){
 								arrRequests.add(newRequestModel.getRequester());
-							}else{
-								arrRequests.add(newRequestModel.getContractorName());
 							}
 							Log.i(TAG, "size: "+arrRequests.size());
 							initRecyclerView();
@@ -141,5 +143,23 @@ public class Requests extends Fragment {
 		RequestAdapter requestAdapter = new RequestAdapter(arrRequests,getContext());
 		requests_recyclerview.setAdapter(requestAdapter);
 		requests_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+	}
+	
+	public void getBusinessName(){
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Business Information").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					ContractorModel contractorModel = dataSnapshot.getValue(ContractorModel.class);
+					businessName = contractorModel.getBusinessName();
+					Log.i(TAG, "businessName: "+businessName);
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
 	}
 }

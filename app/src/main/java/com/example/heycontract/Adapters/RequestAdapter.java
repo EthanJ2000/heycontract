@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.heycontract.Dashboard;
 import com.example.heycontract.Fragments.Properties;
+import com.example.heycontract.Fragments.RequestDetails;
 import com.example.heycontract.R;
 
 import java.util.ArrayList;
@@ -44,8 +45,14 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Viewhold
 		holder.listUsername.setText(arrRequesters.get(position));
 		
 		//OnClick
-		holder.item_parent_layout.setOnClickListener(view ->
-		((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment_container, Dashboard.requestDetails).commit());
+		holder.item_parent_layout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				RequestDetails.name = arrRequesters.get(position);
+				((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment_container, Dashboard.requestDetails).commit();
+			}
+		});
+		
 	}
 	
 	@Override

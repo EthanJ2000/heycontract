@@ -53,6 +53,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	public static Jobs jobs;
 	public static Categories categories;
 	public static Home home;
+	public static Requests requests;
 	public static Settings settingsFragment;
 	public static Notifications notificationsFragment;
 	FragmentManager fragmentManager = getSupportFragmentManager();
@@ -138,7 +139,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 						break;
 						
 					case R.id.bottomnav_requests:
-						Requests requests = new Requests();
+						requests = new Requests();
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, requests);
 						fragmentTransaction.commit();
 						
@@ -312,7 +313,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		}else if((requestDetails!=null)&&(requestDetails.isVisible())){
 			fm = getSupportFragmentManager();
 			fragmentTransaction = fm.beginTransaction();
-			fragmentTransaction.replace(R.id.dashboard_fragment_container,jobs);
+			fragmentTransaction.replace(R.id.dashboard_fragment_container,requests);
 			fragmentTransaction.commit();
 		}
 		else{
