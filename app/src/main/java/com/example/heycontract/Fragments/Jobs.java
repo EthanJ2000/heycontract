@@ -84,7 +84,7 @@ public class Jobs extends Fragment {
 				{
 					for (DataSnapshot child : dataSnapshot.getChildren())
 					{
-						if (child.getKey().equals("AccountType"))
+						if (child.getKey().equals("accountType"))
 						{
 							if (child.getValue().equals("Contractor"))
 							{

@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.heycontract.Fragments.BusinessProfile;
 import com.example.heycontract.Fragments.Categories;
 import com.example.heycontract.Fragments.CategoryInfo;
+import com.example.heycontract.Fragments.GetAQuote;
 import com.example.heycontract.Fragments.Home;
 import com.example.heycontract.Fragments.Jobs;
 import com.example.heycontract.Fragments.Notifications;
@@ -43,6 +44,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	private static final String TAG = "Dashboard";
 	
 	//Fragments
+	public static GetAQuote getAQuote;
 	public static BusinessProfile businessProfile;
 	public static CategoryInfo categoryInfo;
 	public static Jobs jobs;
@@ -59,6 +61,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		setContentView(R.layout.activity_dashboard);
 		
 		//Init
+		getAQuote = new GetAQuote();
 		businessProfile = new BusinessProfile();
 		categoryInfo = new CategoryInfo();
 		categories = new Categories();
@@ -171,7 +174,8 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 				if (dataSnapshot.exists()){
 					for (DataSnapshot child : dataSnapshot.getChildren()) {
-						if (child.getKey().equals("AccountType")){
+						if (child.getKey().equals("accountType")){
+							Log.i(TAG, "acounttype: "+child.getValue());
 							switch (child.getValue(String.class)){
 								case "Landlord":
 									Log.i(TAG, "onDataChange: Landlord");
@@ -293,6 +297,11 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			fm = getSupportFragmentManager();
 			fragmentTransaction = fm.beginTransaction();
 			fragmentTransaction.replace(R.id.dashboard_fragment_container,categoryInfo);
+			fragmentTransaction.commit();
+		}else if((getAQuote!=null)&&(getAQuote.isVisible())){
+			fm = getSupportFragmentManager();
+			fragmentTransaction = fm.beginTransaction();
+			fragmentTransaction.replace(R.id.dashboard_fragment_container,businessProfile);
 			fragmentTransaction.commit();
 		}
 		else{

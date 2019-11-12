@@ -69,15 +69,20 @@ public class ContractorsAdapter extends RecyclerView.Adapter<ContractorsAdapter.
 			}
 		});
 		
-		holder.txtBusinessName.setText(arrBusinessNames.get(position));
-		holder.txtPhoneNumber.setText(arrPhoneNumbers.get(position));
+		if (arrBusinessNames.size()==arrPhoneNumbers.size()){
+			holder.txtBusinessName.setText(arrBusinessNames.get(position));
+			holder.txtPhoneNumber.setText(arrPhoneNumbers.get(position));
+		}
 		
 		//OnClicks
 		holder.contractorRecycler_parent_layout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				BusinessProfile.businessName = arrBusinessNames.get(position);
-				((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment_container, Dashboard.businessProfile).commit();
+				if (arrBusinessNames.size()==arrPhoneNumbers.size()){
+					Log.i(TAG, "onClick: "+arrBusinessNames.get(position));
+					BusinessProfile.businessName = arrBusinessNames.get(position);
+					((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment_container, Dashboard.businessProfile).commit();
+				}
 			}
 		});
 	}

@@ -167,6 +167,8 @@ public class CategoryInfo extends Fragment {
 	
 	public void initRecyclerView(){
 		ContractorsAdapter contractorsAdapter = new ContractorsAdapter(arrBusinessNames,arrPhoneNumbers,getContext());
+		Log.i(TAG, "initRecyclerView: "+arrBusinessNames);
+		Log.i(TAG, "initRecyclerView: "+arrPhoneNumbers);
 		categoryInfo_recyclerview.setAdapter(contractorsAdapter);
 		categoryInfo_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 	}

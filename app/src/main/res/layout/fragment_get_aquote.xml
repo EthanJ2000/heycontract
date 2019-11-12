@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.GetAQuote">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TIL_BusinessName_GetAQuote"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/edtBusinessName_GetAQuote"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:background="@drawable/editbox"
+            android:ellipsize="end"
+            android:hint="Business Name"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:translationY="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TIL_FullName_GetAQuote"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TIL_BusinessName_GetAQuote">
+        <EditText
+            android:id="@+id/edtFullName_GetAQuote"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:background="@drawable/editbox"
+            android:ellipsize="end"
+            android:hint="@string/FullName"
+            android:inputType="none"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:translationY="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TIL_TypeOfWork_GetAQuote"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TIL_FullName_GetAQuote">
+
+        <EditText
+            android:id="@+id/edtTypeOfWork_GetAQuote"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:background="@drawable/editbox"
+            android:ellipsize="end"
+            android:hint="Type of work required"
+            android:inputType="none"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:translationY="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/TIL_Details_GetAQuote"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:textColorHint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TIL_TypeOfWork_GetAQuote">
+
+        <EditText
+            android:id="@+id/edtDetails_GetAQuote"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/editbox"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:hint="Details"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:translationY="10dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <ImageButton
+        android:id="@+id/btnSendRequest"
+        android:layout_width="184dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/btnsendrequest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TIL_Details_GetAQuote" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

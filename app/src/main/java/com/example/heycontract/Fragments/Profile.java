@@ -150,7 +150,7 @@ public class Profile extends Fragment {
 			public void onClick(View view) {
 				loadingWheel_Profile.setVisibility(View.VISIBLE);
 				FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid())
-						.child("Profile").child("AccountType").addListenerForSingleValueEvent(new ValueEventListener() {
+						.child("Profile").child("accountType").addListenerForSingleValueEvent(new ValueEventListener() {
 					@Override
 					public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 						if (dataSnapshot.exists()) {
@@ -200,22 +200,22 @@ public class Profile extends Fragment {
 					for (DataSnapshot child : dataSnapshot.getChildren()) {
 						Log.i(TAG, "onDataChange child: " + child.getKey());
 						switch (child.getKey()) {
-							case "FullName":
+							case "fullName":
 								fullName = child.getValue(String.class);
 								edtName_Profile.setText(fullName);
 								edtName_Profile.setCompoundDrawables(null, null, null, null);
 								break;
-							case "Email":
+							case "email":
 								email = child.getValue(String.class);
 								edtEmail_Profile.setText(email);
 								edtEmail_Profile.setCompoundDrawables(null, null, null, null);
 								break;
-							case "PhoneNumber":
+							case "phoneNumber":
 								phoneNumber = child.getValue(String.class);
 								edtPhoneNumber_Profile.setText(phoneNumber);
 								edtPhoneNumber_Profile.setCompoundDrawables(null, null, null, null);
 								break;
-							case "Address":
+							case "address":
 								address = child.getValue(String.class);
 								edtAddress_Profile.setText(address);
 								edtAddress_Profile.setCompoundDrawables(null, null, null, null);
