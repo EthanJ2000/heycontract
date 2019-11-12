@@ -42,6 +42,10 @@ public class Jobs extends Fragment {
 	private RecyclerView activejobs_recyclerview;
 	private TextView txtNoPendingRequest;
 	private TextView txtNoActiveJobs;
+	private TextView txtPendingJobs;
+	private TextView txtActiveJobs;
+	private TextView txtContractorActiveJobs;
+	private RecyclerView ContractorActiveJobs_recyclerview;
 	private ArrayList<String> arrRequests = new ArrayList<>();
 	private ArrayList<String> arrActiveJobs = new ArrayList<>();
 	public String accountType;
@@ -76,6 +80,10 @@ public class Jobs extends Fragment {
 	
 	private void init() {
 		getAccountType();
+		ContractorActiveJobs_recyclerview = getView().findViewById(R.id.ContractorActiveJobs_recyclerview);
+		txtContractorActiveJobs = getView().findViewById(R.id.txtContractorActiveJobs);
+		txtActiveJobs = getView().findViewById(R.id.txtActiveJobs);
+		txtPendingJobs = getView().findViewById(R.id.txtPendingJobs);
 		arrRequests.clear();
 		loadingWheel_Jobs = getView().findViewById(R.id.loadingWheel_Jobs);
 		loadingWheel_Jobs.setVisibility(View.VISIBLE);
@@ -97,6 +105,7 @@ public class Jobs extends Fragment {
 		fab_Jobs = getView().findViewById(R.id.fab_Jobs);
 	}
 	
+	
 	private void getAccountType() {
 		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
@@ -108,9 +117,18 @@ public class Jobs extends Fragment {
 						if ((child.getKey().equals("accountType"))||(child.getKey().equals("AccountType")))
 						{
 							accountType = child.getValue(String.class);
-							if (child.getValue().equals("Contractor"))
+							Dashboard.accountType = accountType;
+							if (!(child.getValue().equals("Contractor")))
 							{
-								fab_Jobs.hide();
+								txtPendingJobs.setVisibility(View.VISIBLE);
+								pendingjobs_recyclerview.setVisibility(View.VISIBLE);
+								txtActiveJobs.setVisibility(View.VISIBLE);
+								activejobs_recyclerview.setVisibility(View.VISIBLE);
+								fab_Jobs.show();
+								
+							}else {
+								txtContractorActiveJobs.setVisibility(View.VISIBLE);
+								ContractorActiveJobs_recyclerview.setVisibility(View.VISIBLE);
 							}
 						}
 					}
@@ -125,6 +143,7 @@ public class Jobs extends Fragment {
 	}
 	
 	public void initRequestArray() {
+		//add check so it matches each user
 		FirebaseBackend.dbRef.child("Requests").addChildEventListener(new ChildEventListener() {
 			@Override
 			public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -135,15 +154,16 @@ public class Jobs extends Fragment {
 						RequestModel newRequestModel = child.getValue(RequestModel.class);
 						Log.i(TAG, "requester: "+newRequestModel.getRequester());
 						Log.i(TAG, "accounttypeinfo: "+accountType);
-						if (accountType.equals("Contractor")){
-							arrRequests.add(newRequestModel.getRequester());
-						}else{
-							arrRequests.add(newRequestModel.getContractorName());
+						if (Dashboard.accountType!=null){
+							if (Dashboard.accountType.equals("Contractor")){
+								arrRequests.add(newRequestModel.getRequester());
+							}else{
+								arrRequests.add(newRequestModel.getContractorName());
+							}
+							Log.i(TAG, "size: "+arrRequests.size());
+							initRequestRecyclerView();
 						}
-						
 					}
-					Log.i(TAG, "size: "+arrRequests.size());
-					initRequestRecyclerView();
 				}else{
 					txtNoPendingRequest.setVisibility(View.VISIBLE);
 				}

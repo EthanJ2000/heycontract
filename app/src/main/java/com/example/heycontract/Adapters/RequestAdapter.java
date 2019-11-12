@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.heycontract.Dashboard;
+import com.example.heycontract.Fragments.Properties;
 import com.example.heycontract.R;
 
 import java.util.ArrayList;
@@ -38,6 +42,10 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Viewhold
 	@Override
 	public void onBindViewHolder(@NonNull Viewholder holder, int position) {
 		holder.listUsername.setText(arrRequesters.get(position));
+		
+		//OnClick
+		holder.item_parent_layout.setOnClickListener(view ->
+		((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment_container, Dashboard.requestDetails).commit());
 	}
 	
 	@Override
@@ -48,8 +56,10 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Viewhold
 	public class Viewholder extends RecyclerView.ViewHolder {
 		CircleImageView listProfilePicture;
 		TextView listUsername;
+		ConstraintLayout item_parent_layout;
 		public Viewholder(@NonNull View itemView) {
 			super(itemView);
+			item_parent_layout = itemView.findViewById(R.id.item_parent_layout);
 			listProfilePicture = itemView.findViewById(R.id.listProfilePicture);
 			listUsername = itemView.findViewById(R.id.listUsername);
 		}

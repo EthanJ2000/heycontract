@@ -24,6 +24,7 @@ import com.example.heycontract.Fragments.Jobs;
 import com.example.heycontract.Fragments.Notifications;
 import com.example.heycontract.Fragments.Profile;
 import com.example.heycontract.Fragments.Properties;
+import com.example.heycontract.Fragments.RequestDetails;
 import com.example.heycontract.Fragments.Requests;
 import com.example.heycontract.Fragments.Settings;
 import com.example.heycontract.Fragments.Tenants;
@@ -41,9 +42,11 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	ImageButton btnSettings;
 	ImageButton btnMessages_Dashboard;
 	ImageButton btnNotifications_Dashboard;
+	public static String accountType;
 	private static final String TAG = "Dashboard";
 	
 	//Fragments
+	public static RequestDetails requestDetails;
 	public static GetAQuote getAQuote;
 	public static BusinessProfile businessProfile;
 	public static CategoryInfo categoryInfo;
@@ -149,6 +152,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	
 	private void init() {
 		//Init
+		requestDetails = new RequestDetails();
 		getAQuote = new GetAQuote();
 		businessProfile = new BusinessProfile();
 		categoryInfo = new CategoryInfo();
@@ -304,6 +308,11 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			fm = getSupportFragmentManager();
 			fragmentTransaction = fm.beginTransaction();
 			fragmentTransaction.replace(R.id.dashboard_fragment_container,businessProfile);
+			fragmentTransaction.commit();
+		}else if((requestDetails!=null)&&(requestDetails.isVisible())){
+			fm = getSupportFragmentManager();
+			fragmentTransaction = fm.beginTransaction();
+			fragmentTransaction.replace(R.id.dashboard_fragment_container,jobs);
 			fragmentTransaction.commit();
 		}
 		else{

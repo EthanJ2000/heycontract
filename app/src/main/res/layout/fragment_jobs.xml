@@ -43,6 +43,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:text="Pending Requests"
+        android:visibility="gone"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,6 +53,7 @@
         android:id="@+id/pendingjobs_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
@@ -67,10 +69,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Active Jobs"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/loadingWheel_Jobs" />
 
@@ -82,6 +85,7 @@
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
         android:scrollbars="vertical"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtActiveJobs" />
@@ -94,6 +98,7 @@
         android:layout_marginBottom="16dp"
         style="@style/Widget.Design.FloatingActionButton"
         app:borderWidth="0dp"
+        android:visibility="gone"
         android:backgroundTint="@color/lightblue"
         android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -126,5 +131,32 @@
         app:layout_constraintEnd_toEndOf="@+id/activejobs_recyclerview"
         app:layout_constraintStart_toStartOf="@+id/activejobs_recyclerview"
         app:layout_constraintTop_toBottomOf="@+id/txtActiveJobs" />
+
+    <TextView
+        android:id="@+id/txtContractorActiveJobs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Active Jobs"
+        android:visibility="gone"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ContractorActiveJobs_recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContractorActiveJobs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

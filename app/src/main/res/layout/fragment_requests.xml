@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Properties">
 
+    <TextView
+        android:id="@+id/txtNoPendingRequest2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Pending Requests"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/txtActiveJobs"
+        app:layout_constraintEnd_toEndOf="@+id/pendingjobs_recyclerview"
+        app:layout_constraintStart_toStartOf="@+id/pendingjobs_recyclerview"
+        app:layout_constraintTop_toBottomOf="@+id/txtPendingJobs" />
+
     <ProgressBar
         android:id="@+id/loadingWheel_Requests"
         android:layout_width="wrap_content"
@@ -51,7 +65,7 @@
 
 
     <TextView
-        android:id="@+id/txtNoRequests"
+        android:id="@+id/txtNoRequests_Requests"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No Requests"
@@ -59,7 +73,7 @@
         android:textSize="15sp"
         android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/jobs_recyclerview"
+        app:layout_constraintBottom_toBottomOf="@+id/requests_recyclerview"
         app:layout_constraintEnd_toEndOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
