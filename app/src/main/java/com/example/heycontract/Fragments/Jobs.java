@@ -14,15 +14,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.heycontract.Adapters.RequestAdapter;
 import com.example.heycontract.Dashboard;
 import com.example.heycontract.FirebaseBackend;
+import com.example.heycontract.Models.RequestModel;
 import com.example.heycontract.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Jobs extends Fragment {
 	
@@ -35,17 +42,20 @@ public class Jobs extends Fragment {
 	private RecyclerView activejobs_recyclerview;
 	private TextView txtNoPendingRequest;
 	private TextView txtNoActiveJobs;
+	private ArrayList<String> arrRequests = new ArrayList<>();
+	private ArrayList<String> arrActiveJobs = new ArrayList<>();
+	public String accountType;
 	
 	
 	
 	public Jobs() {
 		// Required empty public constructor
 	}
-
-
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-							 Bundle savedInstanceState) {
+	                         Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.fragment_jobs, container, false);
 	}
@@ -55,19 +65,20 @@ public class Jobs extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		init();
-		
 		//OnClicks
-		fab_Jobs.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				fragmentTransaction.replace(R.id.dashboard_fragment_container, Dashboard.categories);
-				fragmentTransaction.commit();
-			}
+		fab_Jobs.setOnClickListener(view1 ->
+		{
+			fragmentTransaction.replace(R.id.dashboard_fragment_container, Dashboard.categories);
+			fragmentTransaction.commit();
 		});
 		
 	}
 	
 	private void init() {
+		getAccountType();
+		arrRequests.clear();
+		loadingWheel_Jobs = getView().findViewById(R.id.loadingWheel_Jobs);
+		loadingWheel_Jobs.setVisibility(View.VISIBLE);
 		pendingjobs_recyclerview = getView().findViewById(R.id.pendingjobs_recyclerview);
 		activejobs_recyclerview = getView().findViewById(R.id.activejobs_recyclerview);
 		txtNoPendingRequest = getView().findViewById(R.id.txtNoPendingRequest);
@@ -76,12 +87,13 @@ public class Jobs extends Fragment {
 		backend.initAuth();
 		backend.initDB();
 		backend.initStorage();
-		initArray();
-		getAccountType();
+		initRequestArray();
+		
+		
+		
 		
 		fragmentManager = getActivity().getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
-		loadingWheel_Jobs = getView().findViewById(R.id.loadingWheel_Jobs);
 		fab_Jobs = getView().findViewById(R.id.fab_Jobs);
 	}
 	
@@ -93,8 +105,9 @@ public class Jobs extends Fragment {
 				{
 					for (DataSnapshot child : dataSnapshot.getChildren())
 					{
-						if (child.getKey().equals("accountType"))
+						if ((child.getKey().equals("accountType"))||(child.getKey().equals("AccountType")))
 						{
+							accountType = child.getValue(String.class);
 							if (child.getValue().equals("Contractor"))
 							{
 								fab_Jobs.hide();
@@ -111,16 +124,44 @@ public class Jobs extends Fragment {
 		});
 	}
 	
-	public void initArray(){
-		//Check if data doesnt exist
-		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Jobs").addListenerForSingleValueEvent(new ValueEventListener() {
+	public void initRequestArray() {
+		FirebaseBackend.dbRef.child("Requests").addChildEventListener(new ChildEventListener() {
 			@Override
-			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-				if (!dataSnapshot.exists()){
-					Log.i(TAG, "singlevalue: doesnt exist");
-					loadingWheel_Jobs.setVisibility(View.GONE);
-//					txtNoJobs.setVisibility(View.VISIBLE);
+			public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+				if (dataSnapshot.exists())
+				{
+					for (DataSnapshot child : dataSnapshot.getChildren())
+					{
+						RequestModel newRequestModel = child.getValue(RequestModel.class);
+						Log.i(TAG, "requester: "+newRequestModel.getRequester());
+						Log.i(TAG, "accounttypeinfo: "+accountType);
+						if (accountType.equals("Contractor")){
+							arrRequests.add(newRequestModel.getRequester());
+						}else{
+							arrRequests.add(newRequestModel.getContractorName());
+						}
+						
+					}
+					Log.i(TAG, "size: "+arrRequests.size());
+					initRequestRecyclerView();
+				}else{
+					txtNoPendingRequest.setVisibility(View.VISIBLE);
 				}
+			}
+			
+			@Override
+			public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+			
+			}
+			
+			@Override
+			public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+			
+			}
+			
+			@Override
+			public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+			
 			}
 			
 			@Override
@@ -128,5 +169,16 @@ public class Jobs extends Fragment {
 			
 			}
 		});
+		
 	}
+	
+	public void initRequestRecyclerView(){
+		Log.i(TAG, "initRequestRecyclerView: "+arrRequests.size());
+		RequestAdapter requestAdapter = new RequestAdapter(arrRequests,getContext());
+		pendingjobs_recyclerview.setAdapter(requestAdapter);
+		pendingjobs_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+		loadingWheel_Jobs.setVisibility(View.GONE);
+	}
+	
 }
+

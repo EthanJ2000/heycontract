@@ -1,13 +1,14 @@
 package com.example.heycontract.Fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.heycontract.Dashboard;
 import com.example.heycontract.FirebaseBackend;
+import com.example.heycontract.Models.RequestModel;
 import com.example.heycontract.R;
-import com.github.kimkevin.cachepot.CachePot;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GetAQuote extends Fragment {
 	
@@ -33,6 +37,10 @@ public class GetAQuote extends Fragment {
 	private EditText edtTypeOfWork_GetAQuote;
 	private EditText edtDetails_GetAQuote;
 	private ImageButton btnSendRequest;
+	private ProgressBar loadingWheel_GetAQuote;
+	public String currentUsername;
+	FragmentManager fragmentManager;
+	FragmentTransaction fragmentTransaction;
 	private static final String TAG = "GetAQuote";
 
 	public GetAQuote() {
@@ -50,8 +58,38 @@ public class GetAQuote extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
+		init();
+		getCurrentUsername();
+		//OnClicks
+		btnSendRequest.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				loadingWheel_GetAQuote.setVisibility(View.VISIBLE);
+				String requestDetails = edtDetails_GetAQuote.getText().toString();
+				if (requestDetails.isEmpty()){
+					loadingWheel_GetAQuote.setVisibility(View.GONE);
+					Toast.makeText(getContext(),"Please add detail",Toast.LENGTH_LONG).show();
+				}else{
+					String businessName = edtBusinessName_GetAQuote.getText().toString();
+					String typeOfWork = edtTypeOfWork_GetAQuote.getText().toString();
+					String details = edtDetails_GetAQuote.getText().toString();
+					
+					RequestModel requestModel = new RequestModel(businessName,typeOfWork,details,currentUsername);
+					FirebaseBackend.dbRef.child("Requests").push().child("Request Info").setValue(requestModel);
+					loadingWheel_GetAQuote.setVisibility(View.GONE);
+					fragmentTransaction.replace(R.id.dashboard_fragment_container, Dashboard.jobs);
+					fragmentTransaction.commit();
+					Toast.makeText(getContext(),"Request Sent",Toast.LENGTH_LONG).show();
+				}
+			}
+		});
+	}
+	
+	private void init() {
 		//Inits
+		fragmentManager = getActivity().getSupportFragmentManager();
+		fragmentTransaction = fragmentManager.beginTransaction();
+		loadingWheel_GetAQuote = getView().findViewById(R.id.loadingWheel_GetAQuote);
 		edtBusinessName_GetAQuote = getView().findViewById(R.id.edtBusinessName_GetAQuote);
 		edtFullName_GetAQuote = getView().findViewById(R.id.edtFullName_GetAQuote);
 		edtTypeOfWork_GetAQuote = getView().findViewById(R.id.edtTypeOfWork_GetAQuote);
@@ -62,20 +100,6 @@ public class GetAQuote extends Fragment {
 		backend.initAuth();
 		backend.initStorage();
 		setInfo();
-		
-		
-		//OnClicks
-		btnSendRequest.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				String requestDetails = edtDetails_GetAQuote.getText().toString();
-				if (requestDetails.isEmpty()){
-					Toast.makeText(getContext(),"Please add detail",Toast.LENGTH_LONG).show();
-				}else{
-				
-				}
-			}
-		});
 	}
 	
 	@Override
@@ -137,6 +161,31 @@ public class GetAQuote extends Fragment {
 		
 		//Get Type of Work
 		
+		
+	}
+	
+	public void getCurrentUsername(){
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					Log.i(TAG, "getCurrentUsername: "+dataSnapshot);
+					for (DataSnapshot datakey : dataSnapshot.getChildren())
+					{
+						if (datakey.getKey().equals("FullName"))
+						{
+							currentUsername = datakey.getValue(String.class);
+							Log.i(TAG, "datakey: " + datakey.getValue());
+						}
+					}
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
 		
 	}
 }

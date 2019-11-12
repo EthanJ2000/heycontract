@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Pending Requests"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
@@ -51,10 +51,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pendingjobs_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/txtActiveJobs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPendingJobs" />
@@ -76,8 +79,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtActiveJobs" />
@@ -97,28 +101,30 @@
 
     <TextView
         android:id="@+id/txtNoPendingRequest"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No Pending Requests"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/pendingjobs_recyclerview"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/txtActiveJobs"
         app:layout_constraintEnd_toEndOf="@+id/pendingjobs_recyclerview"
         app:layout_constraintStart_toStartOf="@+id/pendingjobs_recyclerview"
-        app:layout_constraintTop_toTopOf="@+id/pendingjobs_recyclerview" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPendingJobs" />
 
     <TextView
         android:id="@+id/txtNoActiveJobs"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No Active Jobs"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/activejobs_recyclerview"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/activejobs_recyclerview"
         app:layout_constraintStart_toStartOf="@+id/activejobs_recyclerview"
-        app:layout_constraintTop_toTopOf="@+id/activejobs_recyclerview" />
+        app:layout_constraintTop_toBottomOf="@+id/txtActiveJobs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
