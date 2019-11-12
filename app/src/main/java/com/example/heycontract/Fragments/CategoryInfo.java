@@ -55,7 +55,10 @@ public class CategoryInfo extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
+		init();
+	}
+	
+	private void init() {
 		//Inits
 		txtNoContractors = getView().findViewById(R.id.txtNoContractors);
 		lblCategoryTitle = getView().findViewById(R.id.lblCategoryTitle);
@@ -63,10 +66,6 @@ public class CategoryInfo extends Fragment {
 		arrBusinessNames.clear();
 		arrPhoneNumbers.clear();
 		initArray();
-//		if (arrBusinessNames.size() == 0){
-//			txtNoContractors.setVisibility(View.VISIBLE);
-//		}
-		
 		lblCategoryTitle.setText(categoryTitle);
 	}
 	

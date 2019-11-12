@@ -49,7 +49,12 @@ public class Categories extends Fragment implements View.OnClickListener {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		init();
 		
+		
+	}
+	
+	private void init() {
 		//Inits
 		gridLayout_Categories = getView().findViewById(R.id.gridLayout_Categories);
 		btnCarpeting = getView().findViewById(R.id.btnCarpeting);
@@ -78,7 +83,6 @@ public class Categories extends Fragment implements View.OnClickListener {
 		
 		btnTiling = getView().findViewById(R.id.btnTiling);
 		btnTiling.setOnClickListener(this);
-		
 	}
 	
 	

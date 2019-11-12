@@ -50,17 +50,7 @@ public class Tenants extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		//Init
-		txtNoProperties_Tenants = getView().findViewById(R.id.txtNoProperties_Tenants);
-		loadingWheel_Tenants = getView().findViewById(R.id.loadingWheel_Tenants);
-		loadingWheel_Tenants.setVisibility(View.VISIBLE);
-		tenants_recyclerview = getView().findViewById(R.id.tenants_recyclerview);
-		fab_Tenants = getView().findViewById(R.id.fab_Tenants);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initDB();
-		backend.initAuth();
-		initArray();
+		init();
 
 
 		//OnClicks
@@ -75,7 +65,20 @@ public class Tenants extends Fragment {
 			}
 		});
 	}
-
+	
+	private void init() {
+		//Init
+		txtNoProperties_Tenants = getView().findViewById(R.id.txtNoProperties_Tenants);
+		loadingWheel_Tenants = getView().findViewById(R.id.loadingWheel_Tenants);
+		loadingWheel_Tenants.setVisibility(View.VISIBLE);
+		tenants_recyclerview = getView().findViewById(R.id.tenants_recyclerview);
+		fab_Tenants = getView().findViewById(R.id.fab_Tenants);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initDB();
+		backend.initAuth();
+		initArray();
+	}
+	
 	public void initArray(){
 		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Tenants").addChildEventListener(new ChildEventListener() {
 			@Override

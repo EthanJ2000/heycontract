@@ -28,11 +28,14 @@ public class Jobs extends Fragment {
 	
 	private static final String TAG = "Jobs";
 	private ProgressBar loadingWheel_Jobs;
-	private RecyclerView jobs_recyclerview;
 	private FloatingActionButton fab_Jobs;
-	private TextView txtNoJobs;
 	private FragmentManager fragmentManager;
 	private FragmentTransaction fragmentTransaction;
+	private RecyclerView pendingjobs_recyclerview;
+	private RecyclerView activejobs_recyclerview;
+	private TextView txtNoPendingRequest;
+	private TextView txtNoActiveJobs;
+	
 	
 	
 	public Jobs() {
@@ -51,19 +54,7 @@ public class Jobs extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initAuth();
-		backend.initDB();
-		backend.initStorage();
-		initArray();
-		getAccountType();
-		
-		fragmentManager = getActivity().getSupportFragmentManager();
-		fragmentTransaction = fragmentManager.beginTransaction();
-		loadingWheel_Jobs = getView().findViewById(R.id.loadingWheel_Jobs);
-		txtNoJobs = getView().findViewById(R.id.txtNoJobs);
-		fab_Jobs = getView().findViewById(R.id.fab_Jobs);
+		init();
 		
 		//OnClicks
 		fab_Jobs.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +65,24 @@ public class Jobs extends Fragment {
 			}
 		});
 		
+	}
+	
+	private void init() {
+		pendingjobs_recyclerview = getView().findViewById(R.id.pendingjobs_recyclerview);
+		activejobs_recyclerview = getView().findViewById(R.id.activejobs_recyclerview);
+		txtNoPendingRequest = getView().findViewById(R.id.txtNoPendingRequest);
+		txtNoActiveJobs = getView().findViewById(R.id.txtNoActiveJobs);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initAuth();
+		backend.initDB();
+		backend.initStorage();
+		initArray();
+		getAccountType();
+		
+		fragmentManager = getActivity().getSupportFragmentManager();
+		fragmentTransaction = fragmentManager.beginTransaction();
+		loadingWheel_Jobs = getView().findViewById(R.id.loadingWheel_Jobs);
+		fab_Jobs = getView().findViewById(R.id.fab_Jobs);
 	}
 	
 	private void getAccountType() {
@@ -110,7 +119,7 @@ public class Jobs extends Fragment {
 				if (!dataSnapshot.exists()){
 					Log.i(TAG, "singlevalue: doesnt exist");
 					loadingWheel_Jobs.setVisibility(View.GONE);
-					txtNoJobs.setVisibility(View.VISIBLE);
+//					txtNoJobs.setVisibility(View.VISIBLE);
 				}
 			}
 			

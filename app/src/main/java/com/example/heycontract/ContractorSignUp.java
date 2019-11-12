@@ -37,13 +37,7 @@ public class ContractorSignUp extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contractor_sign_up);
-		
-		//Inits
-		fragmentManager = getSupportFragmentManager();
-		fragmentTransaction = fragmentManager.beginTransaction();
-		SignUpFragmentContainer = findViewById(R.id.SignUpFragmentContainer);
-		contractorStepOne = new ContractorStepOne();
-		contractorStepTwo = new ContractorStepTwo();
+		init();
 		
 		//Add First Fragment
 		fragmentTransaction.add(R.id.SignUpFragmentContainer, contractorStepOne);
@@ -51,5 +45,14 @@ public class ContractorSignUp extends AppCompatActivity {
 		
 	}
 	
-
+	private void init() {
+		//Inits
+		fragmentManager = getSupportFragmentManager();
+		fragmentTransaction = fragmentManager.beginTransaction();
+		SignUpFragmentContainer = findViewById(R.id.SignUpFragmentContainer);
+		contractorStepOne = new ContractorStepOne();
+		contractorStepTwo = new ContractorStepTwo();
+	}
+	
+	
 }

@@ -32,11 +32,7 @@ public class Settings extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		//Init
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initAuth();
-		signOut = getView().findViewById(R.id.signOut);
+		init();
 
 		//OnClicks
 		signOut.setOnClickListener(new View.OnClickListener() {
@@ -64,5 +60,12 @@ public class Settings extends Fragment {
 			}
 		});
 
+	}
+	
+	private void init() {
+		//Init
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initAuth();
+		signOut = getView().findViewById(R.id.signOut);
 	}
 }

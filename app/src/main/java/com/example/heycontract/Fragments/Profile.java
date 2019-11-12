@@ -113,23 +113,8 @@ public class Profile extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		//Init
-		loadingWheel_ProfilePicture = getView().findViewById(R.id.loadingWheel_ProfilePicture);
-		loadingWheel_Profile = getView().findViewById(R.id.loadingWheel_Profile);
-		btnSaveChanges_Profile = getView().findViewById(R.id.btnSaveChanges_Profile);
-		edtAddress_Profile = getView().findViewById(R.id.edtAddress_Profile);
-		edtPhoneNumber_Profile = getView().findViewById(R.id.edtPhoneNumber_Profile);
-		edtEmail_Profile = getView().findViewById(R.id.edtEmail_Profile);
-		edtName_Profile = getView().findViewById(R.id.edtName_Profile);
-		circleImageView = getView().findViewById(R.id.circleImageView);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initStorage();
-		backend.initAuth();
-		backend.initDB();
-		loadProfilePicture();
-		loadProfileInfo();
-		btnChangeProfilePicture = getView().findViewById(R.id.btnChangeProfilePicture);
+		init();
+		
 
 
 		//OnClicks
@@ -173,7 +158,26 @@ public class Profile extends Fragment {
 			}
 		});
 	}
-
+	
+	private void init() {
+		//Init
+		loadingWheel_ProfilePicture = getView().findViewById(R.id.loadingWheel_ProfilePicture);
+		loadingWheel_Profile = getView().findViewById(R.id.loadingWheel_Profile);
+		btnSaveChanges_Profile = getView().findViewById(R.id.btnSaveChanges_Profile);
+		edtAddress_Profile = getView().findViewById(R.id.edtAddress_Profile);
+		edtPhoneNumber_Profile = getView().findViewById(R.id.edtPhoneNumber_Profile);
+		edtEmail_Profile = getView().findViewById(R.id.edtEmail_Profile);
+		edtName_Profile = getView().findViewById(R.id.edtName_Profile);
+		circleImageView = getView().findViewById(R.id.circleImageView);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initStorage();
+		backend.initAuth();
+		backend.initDB();
+		loadProfilePicture();
+		loadProfileInfo();
+		btnChangeProfilePicture = getView().findViewById(R.id.btnChangeProfilePicture);
+	}
+	
 	public void loadProfilePicture() {
 		loadingWheel_Profile.setVisibility(View.VISIBLE);
 		FirebaseBackend.storage.getReference().child(FirebaseBackend.auth.getCurrentUser().getEmail()).child("ProfilePicture")

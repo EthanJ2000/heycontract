@@ -52,21 +52,8 @@ public class Properties extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		//Init
-		instance = this;
-		txtNoProperties_Properties = getView().findViewById(R.id.txtNoProperties_Properties);
-		loadingWheel_Properties = getView().findViewById(R.id.loadingWheel_Properties);
-		loadingWheel_Properties.setVisibility(View.VISIBLE);
-		properties_recyclerview = getView().findViewById(R.id.properties_recyclerview);
-		fab_Add_Property = getView().findViewById(R.id.fab_Add_Property);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initDB();
-		backend.initAuth();
-		backend.initStorage();
-
-		initArray();
-		initPropertiesRecyclerView();
+		init();
+		
 		//OnClicks
 		fab_Add_Property.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -79,7 +66,24 @@ public class Properties extends Fragment {
 			}
 		});
 	}
-
+	
+	private void init() {
+		//Init
+		instance = this;
+		txtNoProperties_Properties = getView().findViewById(R.id.txtNoProperties_Properties);
+		loadingWheel_Properties = getView().findViewById(R.id.loadingWheel_Properties);
+		loadingWheel_Properties.setVisibility(View.VISIBLE);
+		properties_recyclerview = getView().findViewById(R.id.properties_recyclerview);
+		fab_Add_Property = getView().findViewById(R.id.fab_Add_Property);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initDB();
+		backend.initAuth();
+		backend.initStorage();
+		
+		initArray();
+		initPropertiesRecyclerView();
+	}
+	
 	public void initArray() {
 		final PropertyModel newModel = new PropertyModel();
 		

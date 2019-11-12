@@ -54,17 +54,7 @@ public class ContractorStepOne extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
-		//Inits
-		edtServicesOffered = getView().findViewById(R.id.edtServicesOffered);
-		edtBusinessOwner = getView().findViewById(R.id.edtBusinessOwner);
-		edtBusinessAddress = getView().findViewById(R.id.edtBusinessAddress);
-		edtBusinessName = getView().findViewById(R.id.edtBusinessName);
-		fragmentManager = getActivity().getSupportFragmentManager();
-		fragmentTransaction = fragmentManager.beginTransaction();
-		btnNext_ContractorSignUp = getView().findViewById(R.id.btnNext_ContractorSignUp);
-		contractor_spinner = getView().findViewById(R.id.contractor_spinner);
-		initDropDown();
+		init();
 		
 		//OnClicks
 		contractor_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -96,6 +86,19 @@ public class ContractorStepOne extends Fragment {
 				}
 			}
 		});
+	}
+	
+	private void init() {
+		//Inits
+		edtServicesOffered = getView().findViewById(R.id.edtServicesOffered);
+		edtBusinessOwner = getView().findViewById(R.id.edtBusinessOwner);
+		edtBusinessAddress = getView().findViewById(R.id.edtBusinessAddress);
+		edtBusinessName = getView().findViewById(R.id.edtBusinessName);
+		fragmentManager = getActivity().getSupportFragmentManager();
+		fragmentTransaction = fragmentManager.beginTransaction();
+		btnNext_ContractorSignUp = getView().findViewById(R.id.btnNext_ContractorSignUp);
+		contractor_spinner = getView().findViewById(R.id.contractor_spinner);
+		initDropDown();
 	}
 	
 	private void initDropDown() {

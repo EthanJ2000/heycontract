@@ -54,22 +54,8 @@ public class AddProperty extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		//Init
-		loadingWheel_AddProperty = getView().findViewById(R.id.loadingWheel_AddProperty);
-		edtAddress_AddProperty = getView().findViewById(R.id.edtAddress_AddProperty);
-		edtNumBedrooms = getView().findViewById(R.id.edtNumBedrooms);
-		edtNumBathrooms = getView().findViewById(R.id.edtNumBathrooms);
-		edtNumGarages = getView().findViewById(R.id.edtNumGarages);
-		btnDone_AddProperty = getView().findViewById(R.id.btnDone_AddProperty);
-		property_picture = getView().findViewById(R.id.property_picture);
-		property_picture_card = getView().findViewById(R.id.property_picture_card);
-		btnAddPropertyImage = getView().findViewById(R.id.btnAddPropertyImage);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initAuth();
-		backend.initStorage();
-		backend.initDB();
-
+		init();
+		
 		//OnClick
 		btnAddPropertyImage.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -159,7 +145,24 @@ public class AddProperty extends Fragment {
 
 		});
 	}
-
+	
+	private void init() {
+		//Init
+		loadingWheel_AddProperty = getView().findViewById(R.id.loadingWheel_AddProperty);
+		edtAddress_AddProperty = getView().findViewById(R.id.edtAddress_AddProperty);
+		edtNumBedrooms = getView().findViewById(R.id.edtNumBedrooms);
+		edtNumBathrooms = getView().findViewById(R.id.edtNumBathrooms);
+		edtNumGarages = getView().findViewById(R.id.edtNumGarages);
+		btnDone_AddProperty = getView().findViewById(R.id.btnDone_AddProperty);
+		property_picture = getView().findViewById(R.id.property_picture);
+		property_picture_card = getView().findViewById(R.id.property_picture_card);
+		btnAddPropertyImage = getView().findViewById(R.id.btnAddPropertyImage);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initAuth();
+		backend.initStorage();
+		backend.initDB();
+	}
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);

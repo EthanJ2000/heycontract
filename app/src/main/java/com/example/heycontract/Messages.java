@@ -46,20 +46,7 @@ public class Messages extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_messages);
-		
-		
-		fab_Messages = findViewById(R.id.fab_Messages);
-		btnBack_Toolbar = findViewById(R.id.btnBack_Toolbar);
-		btnSearch_Toolbar = findViewById(R.id.btnSearch_Toolbar);
-		viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-		viewPager = findViewById(R.id.viewPager);
-		toolbar = findViewById(R.id.toolbar);
-		txtTitle = findViewById(R.id.txtTitle);
-		txtTitle.setText("Messages");
-		setSupportActionBar(toolbar);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initDB();
-		backend.initAuth();
+		init();
 		
 		//Add account type check to change fragment titles
 		addFragments();
@@ -84,6 +71,21 @@ public class Messages extends AppCompatActivity {
 		});
 		
 		
+	}
+	
+	private void init() {
+		fab_Messages = findViewById(R.id.fab_Messages);
+		btnBack_Toolbar = findViewById(R.id.btnBack_Toolbar);
+		btnSearch_Toolbar = findViewById(R.id.btnSearch_Toolbar);
+		viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+		viewPager = findViewById(R.id.viewPager);
+		toolbar = findViewById(R.id.toolbar);
+		txtTitle = findViewById(R.id.txtTitle);
+		txtTitle.setText("Messages");
+		setSupportActionBar(toolbar);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initDB();
+		backend.initAuth();
 	}
 	
 	public void addFragments(){

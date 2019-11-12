@@ -59,26 +59,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
-		
-		//Init
-		getAQuote = new GetAQuote();
-		businessProfile = new BusinessProfile();
-		categoryInfo = new CategoryInfo();
-		categories = new Categories();
-		btnNotifications_Dashboard = findViewById(R.id.btnNotifications_Dashboard);
-		btnMessages_Dashboard = findViewById(R.id.btnMessages_Dashboard);
-		bottomNavigationView = findViewById(R.id.bottomNavigationView);
-		dashboard_fragment_container = findViewById(R.id.dashboard_fragment_container);
-		btnSettings = findViewById(R.id.btnSettings_Dashboard);
-		InternetAvailabilityChecker.init(this);
-		InternetAvailabilityChecker mInternetAvailabilityChecker =
-				InternetAvailabilityChecker.getInstance();
-		mInternetAvailabilityChecker.addInternetConnectivityListener(this);
-		final FirebaseBackend backend = new FirebaseBackend();
-		backend.initAuth();
-		backend.initDB();
-		
-		inflateBottomNav();
+		init();
 		
 		//OnClicks
 		btnSettings.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +145,27 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		});
 		
 		
+	}
+	
+	private void init() {
+		//Init
+		getAQuote = new GetAQuote();
+		businessProfile = new BusinessProfile();
+		categoryInfo = new CategoryInfo();
+		categories = new Categories();
+		btnNotifications_Dashboard = findViewById(R.id.btnNotifications_Dashboard);
+		btnMessages_Dashboard = findViewById(R.id.btnMessages_Dashboard);
+		bottomNavigationView = findViewById(R.id.bottomNavigationView);
+		dashboard_fragment_container = findViewById(R.id.dashboard_fragment_container);
+		btnSettings = findViewById(R.id.btnSettings_Dashboard);
+		InternetAvailabilityChecker.init(this);
+		InternetAvailabilityChecker mInternetAvailabilityChecker =
+				InternetAvailabilityChecker.getInstance();
+		mInternetAvailabilityChecker.addInternetConnectivityListener(this);
+		final FirebaseBackend backend = new FirebaseBackend();
+		backend.initAuth();
+		backend.initDB();
+		inflateBottomNav();
 	}
 	
 	

@@ -47,17 +47,7 @@ public class AddTenant extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
-		//Init
-		address_spinner = getView().findViewById(R.id.address_spinner);
-		btnDone_AddTenant = getView().findViewById(R.id.btnDone_AddTenant);
-		edtFullName_AddTenant = getView().findViewById(R.id.edtFullName_AddTenant);
-		edtEmail_AddTenant = getView().findViewById(R.id.edtEmail_AddTenant);
-		edtPhoneNumber_AddTenant = getView().findViewById(R.id.edtPhoneNumber_AddTenant);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initDB();
-		backend.initAuth();
-		backend.initStorage();
+		init();
 
 		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Properties")
 				.orderByChild("address").addChildEventListener(new ChildEventListener() {
@@ -143,5 +133,18 @@ public class AddTenant extends Fragment {
 
 
 	}
-
+	
+	private void init() {
+		//Init
+		address_spinner = getView().findViewById(R.id.address_spinner);
+		btnDone_AddTenant = getView().findViewById(R.id.btnDone_AddTenant);
+		edtFullName_AddTenant = getView().findViewById(R.id.edtFullName_AddTenant);
+		edtEmail_AddTenant = getView().findViewById(R.id.edtEmail_AddTenant);
+		edtPhoneNumber_AddTenant = getView().findViewById(R.id.edtPhoneNumber_AddTenant);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initDB();
+		backend.initAuth();
+		backend.initStorage();
+	}
+	
 }

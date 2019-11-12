@@ -76,7 +76,19 @@ public class PropertyInfo extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+		init();
 		
+		//OnClicks
+		btnListProperty.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Log.i(TAG, "onClick: list clicked");
+				listProperty();
+			}
+		});
+	}
+	
+	private void init() {
 		//Init
 		apiService = APIUtils.getAPIService();
 		btnSaveChanges_PropertyInfo = getView().findViewById(R.id.btnSaveChanges_PropertyInfo);
@@ -95,15 +107,6 @@ public class PropertyInfo extends Fragment {
 		backend.initDB();
 		getUserFullName();
 		addInfo();
-		
-		//OnClicks
-		btnListProperty.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Log.i(TAG, "onClick: list clicked");
-				listProperty();
-			}
-		});
 	}
 	
 	public void addInfo() {

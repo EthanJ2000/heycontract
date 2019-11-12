@@ -50,18 +50,7 @@ public class ContractorStepTwo extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
-		
-		//Inits
-		loadingWheel_ContractorSignUp = getView().findViewById(R.id.loadingWheel_ContractorSignUp);
-		edtEmail_Contractor = getView().findViewById(R.id.edtEmail_Contractor);
-		edtPhoneNumber_Contractor = getView().findViewById(R.id.edtPhoneNumber_Contractor);
-		edtPassword_Contractor = getView().findViewById(R.id.edtPassword_Contractor);
-		edtConfirmPassword_Contractor = getView().findViewById(R.id.edtConfirmPassword_Contractor);
-		btnSignUp_Contractor = getView().findViewById(R.id.btnSignUp_Contractor);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initAuth();
-		backend.initDB();
+		init();
 		
 		//OnClicks
 		btnSignUp_Contractor.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +75,19 @@ public class ContractorStepTwo extends Fragment {
 				
 			}
 		});
+	}
+	
+	private void init() {
+		//Inits
+		loadingWheel_ContractorSignUp = getView().findViewById(R.id.loadingWheel_ContractorSignUp);
+		edtEmail_Contractor = getView().findViewById(R.id.edtEmail_Contractor);
+		edtPhoneNumber_Contractor = getView().findViewById(R.id.edtPhoneNumber_Contractor);
+		edtPassword_Contractor = getView().findViewById(R.id.edtPassword_Contractor);
+		edtConfirmPassword_Contractor = getView().findViewById(R.id.edtConfirmPassword_Contractor);
+		btnSignUp_Contractor = getView().findViewById(R.id.btnSignUp_Contractor);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initAuth();
+		backend.initDB();
 	}
 	
 	

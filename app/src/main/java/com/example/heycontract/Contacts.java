@@ -37,15 +37,7 @@ public class Contacts extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contacts);
-		
-		viewPager_Contacts = findViewById(R.id.viewPager_Contacts);
-		fab_Contacts = findViewById(R.id.fab_Contacts);
-		btnBack_Toolbar = findViewById(R.id.btnBack_Toolbar);
-		toolbar = findViewById(R.id.toolbar);
-		txtTitle = findViewById(R.id.txtTitle);
-		txtTitle.setText("Contacts");
-		viewPagerAdapterContacts = new ViewPagerAdapter(getSupportFragmentManager());
-		setSupportActionBar(toolbar);
+		init();
 		
 		
 		//Add account type check to change fragment titles
@@ -63,5 +55,16 @@ public class Contacts extends AppCompatActivity {
 				startActivity(new Intent(getApplicationContext(),Messages.class));
 			}
 		});
+	}
+	
+	private void init() {
+		viewPager_Contacts = findViewById(R.id.viewPager_Contacts);
+		fab_Contacts = findViewById(R.id.fab_Contacts);
+		btnBack_Toolbar = findViewById(R.id.btnBack_Toolbar);
+		toolbar = findViewById(R.id.toolbar);
+		txtTitle = findViewById(R.id.txtTitle);
+		txtTitle.setText("Contacts");
+		viewPagerAdapterContacts = new ViewPagerAdapter(getSupportFragmentManager());
+		setSupportActionBar(toolbar);
 	}
 }

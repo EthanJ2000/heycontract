@@ -36,18 +36,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/jobs_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/txtPendingJobs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Pending Requests"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pendingjobs_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPendingJobs" />
+
+    <TextView
+        android:id="@+id/txtActiveJobs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Active Jobs"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/loadingWheel_Jobs" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activejobs_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtActiveJobs" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_Jobs"
@@ -63,17 +96,29 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/txtNoJobs"
+        android:id="@+id/txtNoPendingRequest"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Jobs"
+        android:text="No Pending Requests"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/pendingjobs_recyclerview"
+        app:layout_constraintEnd_toEndOf="@+id/pendingjobs_recyclerview"
+        app:layout_constraintStart_toStartOf="@+id/pendingjobs_recyclerview"
+        app:layout_constraintTop_toTopOf="@+id/pendingjobs_recyclerview" />
+
+    <TextView
+        android:id="@+id/txtNoActiveJobs"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/jobs_recyclerview"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Active Jobs"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/activejobs_recyclerview"
+        app:layout_constraintEnd_toEndOf="@+id/activejobs_recyclerview"
+        app:layout_constraintStart_toStartOf="@+id/activejobs_recyclerview"
+        app:layout_constraintTop_toTopOf="@+id/activejobs_recyclerview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

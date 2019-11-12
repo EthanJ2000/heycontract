@@ -29,15 +29,18 @@ public class SignUpAs extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sign_up_as);
+		init();
 
+
+	}
+	
+	private void init() {
 		//Init
 		btnNext_SignUp = findViewById(R.id.btnNext_SignUp);
 		btnNext_SignUp = findViewById(R.id.btnNext_SignUp);
 		initRadioButtons();
-
-
 	}
-
+	
 	public void initRadioButtons() {
 		radioGroup_SignUp = findViewById(R.id.radioGroup_SignUp);
 		rbTenant_SignUp = findViewById(R.id.rbTenant_SignUp);

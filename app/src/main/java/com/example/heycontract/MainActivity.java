@@ -40,18 +40,7 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		//Init
-		instance = this;
-		loadingWheel_Login = findViewById(R.id.loadingWheel_Login);
-		edtEmail_SignIn = findViewById(R.id.edtEmail_SignIn);
-		edtPassword_SignIn = findViewById(R.id.edtPassword_SignIn);
-		txtSignUp_SignIn = findViewById(R.id.txtSignUp_SignIn);
-		txtForgotPassword_SignIn = findViewById(R.id.txtForgotPassword_SignIn);
-		txtSignUp_SignIn = findViewById(R.id.txtSignUp_SignIn);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initAuth();
-		initDialog();
+		init();
 		
 		//Auto-Login
 		if (FirebaseBackend.auth.getCurrentUser() != null)
@@ -122,6 +111,20 @@ public class MainActivity extends AppCompatActivity {
 				}
 			}
 		});
+	}
+	
+	private void init() {
+		//Init
+		instance = this;
+		loadingWheel_Login = findViewById(R.id.loadingWheel_Login);
+		edtEmail_SignIn = findViewById(R.id.edtEmail_SignIn);
+		edtPassword_SignIn = findViewById(R.id.edtPassword_SignIn);
+		txtSignUp_SignIn = findViewById(R.id.txtSignUp_SignIn);
+		txtForgotPassword_SignIn = findViewById(R.id.txtForgotPassword_SignIn);
+		txtSignUp_SignIn = findViewById(R.id.txtSignUp_SignIn);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initAuth();
+		initDialog();
 	}
 	
 	public void initDialog() {

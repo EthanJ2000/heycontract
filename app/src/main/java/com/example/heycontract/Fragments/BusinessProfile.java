@@ -47,18 +47,7 @@ public class BusinessProfile extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
-		//Inits
-		btnCall = getView().findViewById(R.id.btnCall);
-		btnRequestAQuote = getView().findViewById(R.id.btnRequestAQuote);
-		txtServices = getView().findViewById(R.id.txtServices);
-		txtBusinessName_Profile = getView().findViewById(R.id.txtBusinessName_Profile);
-		txtBusinessName_Profile.setText(businessName);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initDB();
-		backend.initAuth();
-		backend.initStorage();
-		getServicesOffered();
+		init();
 		
 		//OnClicks
 		btnRequestAQuote.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +61,20 @@ public class BusinessProfile extends Fragment {
 			
 			}
 		});
+	}
+	
+	private void init() {
+		//Inits
+		btnCall = getView().findViewById(R.id.btnCall);
+		btnRequestAQuote = getView().findViewById(R.id.btnRequestAQuote);
+		txtServices = getView().findViewById(R.id.txtServices);
+		txtBusinessName_Profile = getView().findViewById(R.id.txtBusinessName_Profile);
+		txtBusinessName_Profile.setText(businessName);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initDB();
+		backend.initAuth();
+		backend.initStorage();
+		getServicesOffered();
 	}
 	
 	public void getServicesOffered() {
