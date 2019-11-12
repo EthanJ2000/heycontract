@@ -1,5 +1,6 @@
 package com.example.heycontract.Fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +19,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.heycontract.Dashboard;
 import com.example.heycontract.FirebaseBackend;
+import com.example.heycontract.MainActivity;
 import com.example.heycontract.Models.ContractorModel;
+import com.example.heycontract.Models.NotificationModel;
 import com.example.heycontract.Models.RequestModel;
 import com.example.heycontract.Models.User;
 import com.example.heycontract.R;
@@ -41,9 +47,14 @@ public class RequestDetails extends Fragment {
 	private EditText edtDetails_Details;
 	private ImageButton btnDeclineQuote;
 	private ImageButton btnQuote;
+	private ImageButton btnSendQuote;
+	private EditText edtQuote;
 	private FragmentActivity requestDetails;
 	public static String name;
 	public String requesterEmail;
+	public String businessName;
+	FragmentManager fragmentManager;
+	FragmentTransaction fragmentTransaction;
 	private static final String TAG = "RequestDetails";
 
 	public RequestDetails() {
@@ -68,10 +79,51 @@ public class RequestDetails extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		getRequesterEmail();
 		init();
+		getBusinessName();
 		addInfo();
+		onClicks();
+	}
+	
+	private void onClicks() {
+		btnDeclineQuote.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+			
+			}
+		});
+		
+		btnQuote.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Dialog dialog = new Dialog(getActivity());
+				dialog.setContentView(R.layout.quote_dialog);
+				dialog.setTitle("Title");
+				edtQuote = dialog.findViewById(R.id.edtQuote);
+				btnSendQuote = dialog.findViewById(R.id.btnSendQuote);
+				btnSendQuote.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						String quoteAmount = edtQuote.getText().toString();
+						if (quoteAmount.isEmpty()){
+							Toast.makeText(getActivity(),"Enter a quote",Toast.LENGTH_LONG).show();
+						}else {
+							NotificationModel notificationModel = new NotificationModel(businessName,name,businessName+" quoted you "+quoteAmount);
+							FirebaseBackend.dbRef.child("Notifications").push().setValue(notificationModel);
+							fragmentTransaction.replace(R.id.dashboard_fragment_container, Dashboard.requests);
+							fragmentTransaction.commit();
+							dialog.dismiss();
+							
+						}
+					}
+				});
+				dialog.show();
+			}
+		});
 	}
 	
 	private void init() {
+		fragmentManager = getActivity().getSupportFragmentManager();
+		fragmentTransaction = fragmentManager.beginTransaction();
 		detailsDisplayPicture = getView().findViewById(R.id.detailsDisplayPicture);
 		detailsDisplayName = getView().findViewById(R.id.detailsDisplayName);
 		edtTypeOfWork_Details = getView().findViewById(R.id.edtTypeOfWork_Details);
@@ -175,5 +227,21 @@ public class RequestDetails extends Fragment {
 		});
 	}
 	
+	public void getBusinessName(){
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid())
+				.child("Business Information").child("businessName").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					businessName = dataSnapshot.getValue(String.class);
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
+	}
 	
 }

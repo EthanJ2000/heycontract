@@ -43,6 +43,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	ImageButton btnMessages_Dashboard;
 	ImageButton btnNotifications_Dashboard;
 	public static String accountType;
+	public static String currentUsername;
 	private static final String TAG = "Dashboard";
 	
 	//Fragments
@@ -171,6 +172,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		backend.initAuth();
 		backend.initDB();
 		inflateBottomNav();
+		getCurrentUsername();
 	}
 	
 	
@@ -181,7 +183,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 				if (dataSnapshot.exists()){
 					for (DataSnapshot child : dataSnapshot.getChildren()) {
-						if (child.getKey().equals("accountType")){
+						if ((child.getKey().equals("accountType"))||(child.getKey().equals("AccountType"))){
 							Log.i(TAG, "acounttype: "+child.getValue());
 							switch (child.getValue(String.class)){
 								case "Landlord":
@@ -203,7 +205,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 						}
 					}
 				}else{
-					Log.i(TAG, "onDataChange: doesnt exist");
+					Log.i(TAG, "this: doesnt exist");
 				}
 				
 			}
@@ -329,4 +331,21 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 					.show();
 		}
 	}
+	
+		public void getCurrentUsername(){
+		//change FullName to fullName
+			FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Profile").child("FullName").addListenerForSingleValueEvent(new ValueEventListener() {
+				@Override
+				public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+					if (dataSnapshot.exists()){
+						currentUsername = dataSnapshot.getValue(String.class);
+					}
+				}
+				
+				@Override
+				public void onCancelled(@NonNull DatabaseError databaseError) {
+				
+				}
+			});
+		}
 }
