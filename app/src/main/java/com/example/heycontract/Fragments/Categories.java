@@ -99,7 +99,7 @@ public class Categories extends Fragment implements View.OnClickListener {
 				break;
 			case R.id.btnCarpenting:
 				Log.i(TAG, "onClick: btnCarpenting");
-				CategoryInfo.categoryTitle = "Carpenting";
+				CategoryInfo.categoryTitle = "Carpentry";
 				break;
 			case R.id.btnCleaning:
 				Log.i(TAG, "onClick: btnCleaning");
@@ -119,7 +119,7 @@ public class Categories extends Fragment implements View.OnClickListener {
 				break;
 			case R.id.btnPlumber:
 				Log.i(TAG, "onClick: btnPlumber");
-				CategoryInfo.categoryTitle = "Plumbing";
+				CategoryInfo.categoryTitle = "Plumber";
 				break;
 			case R.id.btnRoofing:
 				Log.i(TAG, "onClick: btnRoofing");

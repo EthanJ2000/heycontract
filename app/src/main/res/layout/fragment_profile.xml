@@ -65,6 +65,8 @@
         android:layout_height="30dp"
         android:layout_marginStart="70dp"
         android:layout_marginTop="100dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         android:background="@drawable/changepicture_button"
         app:layout_constraintStart_toStartOf="@+id/circleImageView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -192,6 +194,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
                 android:background="@drawable/savechanges_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

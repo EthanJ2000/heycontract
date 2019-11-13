@@ -170,28 +170,19 @@
 
     <ImageButton
         android:id="@+id/btnListProperty"
-        android:visibility="gone"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/listproperty_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSaveChanges_PropertyInfo" />
-
-    <ImageButton
-        android:id="@+id/btnSaveChanges_PropertyInfo"
         android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/savechanges_button"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="@drawable/listproperty_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblNumGarages_PropertyInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNumGarages_PropertyInfo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

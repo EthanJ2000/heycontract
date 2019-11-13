@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.heycontract.Adapters.NotificationAdapter;
+import com.example.heycontract.Dashboard;
 import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.Models.NotificationModel;
 import com.example.heycontract.R;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 public class Notifications extends Fragment {
 	private RecyclerView notification_recyclerview;
 	private ArrayList<String> arrMessages = new ArrayList<>();
+	private TextView txtNoNotifications;
 	private static final String TAG = "Notifications";
 	
 	public Notifications() {
@@ -51,10 +54,13 @@ public class Notifications extends Fragment {
 	}
 	
 	private void init() {
+		txtNoNotifications = getView().findViewById(R.id.txtNoNotifications);
 		notification_recyclerview = getView().findViewById(R.id.notification_recyclerview);
 	}
 	
 	public void initArray(){
+		if (Dashboard.accountType!=null){
+		if (Dashboard.accountType.equals("Landlord")){
 		FirebaseBackend.dbRef.child("Notifications").addChildEventListener(new ChildEventListener() {
 			@Override
 			public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -84,7 +90,12 @@ public class Notifications extends Fragment {
 			public void onCancelled(@NonNull DatabaseError databaseError) {
 			
 			}
-		});
+		});}}
+		
+		if (arrMessages.size() == 0){
+			txtNoNotifications.setVisibility(View.VISIBLE);
+		}
+		
 	}
 	
 	public void initRecyclerView(){

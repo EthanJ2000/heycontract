@@ -61,6 +61,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/No"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:textColor="#0E182C"
             android:textSize="15sp" />
     </RelativeLayout>
@@ -70,6 +72,8 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_alignParentTop="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:background="@drawable/button_yes"
             android:layout_marginStart="5dp"
             android:layout_gravity="center_vertical"/>

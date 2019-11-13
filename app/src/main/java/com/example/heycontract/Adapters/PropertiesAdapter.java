@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.heycontract.Dashboard;
 import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.Fragments.Properties;
 import com.example.heycontract.Fragments.PropertyInfo;
@@ -89,8 +90,8 @@ public class PropertiesAdapter extends RecyclerView.Adapter<PropertiesAdapter.Vi
 				
 				address = arrAddress.get(position);
 				
-				PropertyInfo propertyInfo = new PropertyInfo();
-				((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment_container, propertyInfo).commit();
+				
+				((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.dashboard_fragment_container, Dashboard.propertyInfo).commit();
 				((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction().remove(Properties.instance);
 				
 			}

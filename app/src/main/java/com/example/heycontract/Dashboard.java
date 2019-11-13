@@ -24,6 +24,7 @@ import com.example.heycontract.Fragments.Jobs;
 import com.example.heycontract.Fragments.Notifications;
 import com.example.heycontract.Fragments.Profile;
 import com.example.heycontract.Fragments.Properties;
+import com.example.heycontract.Fragments.PropertyInfo;
 import com.example.heycontract.Fragments.RequestDetails;
 import com.example.heycontract.Fragments.Requests;
 import com.example.heycontract.Fragments.Settings;
@@ -42,11 +43,13 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	ImageButton btnSettings;
 	ImageButton btnMessages_Dashboard;
 	ImageButton btnNotifications_Dashboard;
+	public static String businessName;
 	public static String accountType;
 	public static String currentUsername;
 	private static final String TAG = "Dashboard";
 	
 	//Fragments
+	public static PropertyInfo propertyInfo;
 	public static RequestDetails requestDetails;
 	public static GetAQuote getAQuote;
 	public static BusinessProfile businessProfile;
@@ -154,6 +157,7 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	
 	private void init() {
 		//Init
+		propertyInfo = new PropertyInfo();
 		requestDetails = new RequestDetails();
 		getAQuote = new GetAQuote();
 		businessProfile = new BusinessProfile();
@@ -171,6 +175,8 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 		final FirebaseBackend backend = new FirebaseBackend();
 		backend.initAuth();
 		backend.initDB();
+		getAccountType();
+		getBusinessName();
 		inflateBottomNav();
 		getCurrentUsername();
 	}
@@ -348,4 +354,47 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 				}
 			});
 		}
+	
+	private void getAccountType() {
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists())
+				{
+					for (DataSnapshot child : dataSnapshot.getChildren())
+					{
+						if ((child.getKey().equals("accountType"))||(child.getKey().equals("AccountType")))
+						{
+							Dashboard.accountType = child.getValue(String.class);
+							
+						}
+					}
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
+	}
+	
+	public void getBusinessName(){
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid())
+				.child("Business Information").child("businessName").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					businessName = dataSnapshot.getValue(String.class);
+					Log.i(TAG, "businessName: "+businessName);
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
+	}
+	
 }

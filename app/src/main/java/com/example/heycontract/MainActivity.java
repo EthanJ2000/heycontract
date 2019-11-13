@@ -140,26 +140,31 @@ public class MainActivity extends AppCompatActivity {
 					@Override
 					public void onClick(View view) {
 						String forgotEmail = edtForgot_Email.getText().toString();
-						FirebaseBackend.auth.sendPasswordResetEmail(forgotEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
-							@Override
-							public void onComplete(@NonNull final Task<Void> task) {
-								if (task.isSuccessful()){
-									Toast.makeText(getApplicationContext(),"Email sent",Toast.LENGTH_LONG).show();
-									dialog.dismiss();
-								}else {
-									Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG).show();
-									task.addOnFailureListener(new OnFailureListener() {
-										@Override
-										public void onFailure(@NonNull Exception e) {
-											String errorCode = ((FirebaseAuthException)task.getException()).getErrorCode();
-											if (errorCode.equals("ERROR_USER_NOT_FOUND")){
-												Toast.makeText(getApplicationContext(),"No user found",Toast.LENGTH_LONG).show();
+						if (forgotEmail.isEmpty()){
+							Toast.makeText(getApplicationContext(),"Please enter an email",Toast.LENGTH_LONG).show();
+						}else{
+							FirebaseBackend.auth.sendPasswordResetEmail(forgotEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+								@Override
+								public void onComplete(@NonNull final Task<Void> task) {
+									if (task.isSuccessful()){
+										Toast.makeText(getApplicationContext(),"Email sent",Toast.LENGTH_LONG).show();
+										dialog.dismiss();
+									}else {
+										Toast.makeText(getApplicationContext(),"Something went wrong",Toast.LENGTH_LONG).show();
+										task.addOnFailureListener(new OnFailureListener() {
+											@Override
+											public void onFailure(@NonNull Exception e) {
+												String errorCode = ((FirebaseAuthException)task.getException()).getErrorCode();
+												if (errorCode.equals("ERROR_USER_NOT_FOUND")){
+													Toast.makeText(getApplicationContext(),"No user found",Toast.LENGTH_LONG).show();
+												}
 											}
-										}
-									});
+										});
+									}
 								}
-							}
-						});
+							});
+						}
+						
 					}
 				});
 				

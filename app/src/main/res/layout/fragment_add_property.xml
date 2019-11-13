@@ -44,6 +44,8 @@
         android:layout_height="30dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         android:background="@drawable/changepicture_button"
         android:elevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -158,6 +160,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/done_button"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TIL_NumGarages" />

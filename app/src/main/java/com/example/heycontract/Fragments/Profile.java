@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.heycontract.Dashboard;
 import com.example.heycontract.FirebaseBackend;
 import com.example.heycontract.R;
 import com.example.heycontract.Models.User;
@@ -48,6 +49,7 @@ public class Profile extends Fragment {
 	String email;
 	String phoneNumber;
 	String address;
+	public String businessName;
 	private FragmentActivity profile;
 	private static final String TAG = "Profile";
 	
@@ -86,20 +88,40 @@ public class Profile extends Fragment {
 					bitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageBytes);
 					byte[] imageData = imageBytes.toByteArray();
 
-					FirebaseBackend.storage.getReference().child(FirebaseBackend.auth.getCurrentUser().getEmail()).child("ProfilePicture")
-							.putBytes(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-						@Override
-						public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-							Log.i(TAG, "Successfully updated profile picture");
-							circleImageView.setImageBitmap(bitmap);
-							loadingWheel_ProfilePicture.setVisibility(View.GONE);
-						}
-					}).addOnFailureListener(new OnFailureListener() {
-						@Override
-						public void onFailure(@NonNull Exception e) {
-							Log.e(TAG, "onFailure: ", e);
-						}
-					});
+					//Store picture online
+					if (Dashboard.accountType.equals("Contractor")){
+						FirebaseBackend.storage.getReference().child(businessName).child("ProfilePicture")
+								.putBytes(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+							@Override
+							public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+								Log.i(TAG, "Successfully updated profile picture");
+								circleImageView.setImageBitmap(bitmap);
+								loadingWheel_ProfilePicture.setVisibility(View.GONE);
+							}
+						}).addOnFailureListener(new OnFailureListener() {
+							@Override
+							public void onFailure(@NonNull Exception e) {
+								Log.e(TAG, "onFailure: ", e);
+							}
+						});
+						
+					}else {
+						FirebaseBackend.storage.getReference().child(FirebaseBackend.auth.getCurrentUser().getEmail()).child("ProfilePicture")
+								.putBytes(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+							@Override
+							public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+								Log.i(TAG, "Successfully updated profile picture");
+								circleImageView.setImageBitmap(bitmap);
+								loadingWheel_ProfilePicture.setVisibility(View.GONE);
+							}
+						}).addOnFailureListener(new OnFailureListener() {
+							@Override
+							public void onFailure(@NonNull Exception e) {
+								Log.e(TAG, "onFailure: ", e);
+							}
+						});
+					}
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -161,6 +183,12 @@ public class Profile extends Fragment {
 	
 	private void init() {
 		//Init
+		circleImageView = getView().findViewById(R.id.circleImageView);
+		FirebaseBackend backend = new FirebaseBackend();
+		backend.initStorage();
+		backend.initAuth();
+		backend.initDB();
+		getBusinessName();
 		loadingWheel_ProfilePicture = getView().findViewById(R.id.loadingWheel_ProfilePicture);
 		loadingWheel_Profile = getView().findViewById(R.id.loadingWheel_Profile);
 		btnSaveChanges_Profile = getView().findViewById(R.id.btnSaveChanges_Profile);
@@ -168,31 +196,52 @@ public class Profile extends Fragment {
 		edtPhoneNumber_Profile = getView().findViewById(R.id.edtPhoneNumber_Profile);
 		edtEmail_Profile = getView().findViewById(R.id.edtEmail_Profile);
 		edtName_Profile = getView().findViewById(R.id.edtName_Profile);
-		circleImageView = getView().findViewById(R.id.circleImageView);
-		FirebaseBackend backend = new FirebaseBackend();
-		backend.initStorage();
-		backend.initAuth();
-		backend.initDB();
-		loadProfilePicture();
-		loadProfileInfo();
 		btnChangeProfilePicture = getView().findViewById(R.id.btnChangeProfilePicture);
+		
+		
+		
+		loadProfileInfo();
+		loadProfilePicture();
+		
 	}
 	
 	public void loadProfilePicture() {
 		loadingWheel_Profile.setVisibility(View.VISIBLE);
-		FirebaseBackend.storage.getReference().child(FirebaseBackend.auth.getCurrentUser().getEmail()).child("ProfilePicture")
-				.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-			@Override
-			public void onSuccess(Uri uri) {
-				String url = uri.toString();
-				Glide.with(profile).load(url).into(circleImageView);
-			}
-		}).addOnFailureListener(new OnFailureListener() {
-			@Override
-			public void onFailure(@NonNull Exception e) {
-				Log.e(TAG, "onFailure: ", e);
-			}
-		});
+		Log.i(TAG, "loadProfilePicture: "+Dashboard.accountType);
+		if (businessName == null){
+			businessName = Dashboard.businessName;
+		}
+		if ((Dashboard.accountType.equals("Contractor")&&(businessName!=null)))
+		{
+			Log.i(TAG, "loadProfilePicture: "+businessName);
+			FirebaseBackend.storage.getReference().child(businessName).child("ProfilePicture")
+					.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+				@Override
+				public void onSuccess(Uri uri) {
+					String url = uri.toString();
+					Glide.with(profile).load(url).into(circleImageView);
+				}
+			}).addOnFailureListener(new OnFailureListener() {
+				@Override
+				public void onFailure(@NonNull Exception e) {
+					Log.e(TAG, "onFailure: ", e);
+				}
+			});
+		}else {
+			FirebaseBackend.storage.getReference().child(FirebaseBackend.auth.getCurrentUser().getEmail()).child("ProfilePicture")
+					.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+				@Override
+				public void onSuccess(Uri uri) {
+					String url = uri.toString();
+					Glide.with(profile).load(url).into(circleImageView);
+				}
+			}).addOnFailureListener(new OnFailureListener() {
+				@Override
+				public void onFailure(@NonNull Exception e) {
+					Log.e(TAG, "onFailure: ", e);
+				}
+			});
+		}
 	}
 
 	public void loadProfileInfo() {
@@ -239,5 +288,23 @@ public class Profile extends Fragment {
 		});
 
 
+	}
+	
+	public void getBusinessName(){
+		FirebaseBackend.dbRef.child("users").child(FirebaseBackend.auth.getCurrentUser().getUid())
+				.child("Business Information").child("businessName").addListenerForSingleValueEvent(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if (dataSnapshot.exists()){
+					businessName = dataSnapshot.getValue(String.class);
+					Log.i(TAG, "businessName: "+businessName);
+				}
+			}
+			
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+			
+			}
+		});
 	}
 }

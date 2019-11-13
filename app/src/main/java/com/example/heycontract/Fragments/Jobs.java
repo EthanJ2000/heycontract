@@ -80,6 +80,7 @@ public class Jobs extends Fragment {
 	
 	private void init() {
 		getAccountType();
+		arrRequests.clear();
 		ContractorActiveJobs_recyclerview = getView().findViewById(R.id.ContractorActiveJobs_recyclerview);
 		txtContractorActiveJobs = getView().findViewById(R.id.txtContractorActiveJobs);
 		txtActiveJobs = getView().findViewById(R.id.txtActiveJobs);

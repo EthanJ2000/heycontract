@@ -77,7 +77,7 @@ public class ContractorStepOne extends Fragment {
 				 ownerName = edtBusinessOwner.getText().toString();
 				 servicesOffered = edtServicesOffered.getText().toString();
 				
-				if ((businessName.isEmpty())||(businessAddress.isEmpty())||(spinnerSelection.isEmpty())||(ownerName.isEmpty())){
+				if ((businessName.isEmpty())||(businessAddress.isEmpty())||(spinnerSelection.isEmpty())||(ownerName.isEmpty())||(servicesOffered.isEmpty())){
 					Toast.makeText(getContext(),"Please enter all the fields",Toast.LENGTH_LONG).show();
 				}else {
 					ContractorStepTwo contractorStepTwo = new ContractorStepTwo();

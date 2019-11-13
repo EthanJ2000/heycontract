@@ -47,10 +47,8 @@ public class PropertyInfo extends Fragment {
 	private TextView txtNumBedrooms_PropertyInfo;
 	private TextView txtNumBathrooms_PropertyInfo;
 	private TextView txtNumGarages_PropertyInfo;
-	private ImageButton btnSaveChanges_PropertyInfo;
 	private ImageButton btnListProperty;
 	private APIInterface apiService;
-	
 	private String listedBy;
 	private String address;
 	private String propertyType = "test";
@@ -91,7 +89,6 @@ public class PropertyInfo extends Fragment {
 	private void init() {
 		//Init
 		apiService = APIUtils.getAPIService();
-		btnSaveChanges_PropertyInfo = getView().findViewById(R.id.btnSaveChanges_PropertyInfo);
 		btnListProperty = getView().findViewById(R.id.btnListProperty);
 		loadingWheel_PropertyInfo = getView().findViewById(R.id.loadingWheel_PropertyInfo);
 		property_picture_card_PropertyInfo = getView().findViewById(R.id.property_picture_card_PropertyInfo);

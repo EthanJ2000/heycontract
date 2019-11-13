@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
@@ -109,6 +110,7 @@ public class RequestDetails extends Fragment {
 						}else {
 							NotificationModel notificationModel = new NotificationModel(businessName,name,businessName+" quoted you "+quoteAmount);
 							FirebaseBackend.dbRef.child("Notifications").push().setValue(notificationModel);
+							
 							fragmentTransaction.replace(R.id.dashboard_fragment_container, Dashboard.requests);
 							fragmentTransaction.commit();
 							dialog.dismiss();
@@ -205,8 +207,8 @@ public class RequestDetails extends Fragment {
 						if (!(child.hasChild("Business Information"))){
 							Log.i(TAG, "getValue: "+child.child("Profile").getValue());
 							Map<String, String> mapinfo = (Map<String, String>) child.child("Profile").getValue();
-							if (mapinfo != null){
-								if ((mapinfo.get("FullName").equals(name))||(mapinfo.get("fullName").equals(name))){
+							if ((mapinfo != null)&&(name !=null)){
+								if ((mapinfo.get("fullName").equals(name))){
 									requesterEmail = mapinfo.get("Email");
 									Log.i(TAG, "requesterEmail: "+requesterEmail);
 									if (requesterEmail == null){

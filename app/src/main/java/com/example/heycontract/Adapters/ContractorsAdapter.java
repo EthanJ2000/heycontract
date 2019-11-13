@@ -74,6 +74,21 @@ public class ContractorsAdapter extends RecyclerView.Adapter<ContractorsAdapter.
 			holder.txtPhoneNumber.setText(arrPhoneNumbers.get(position));
 		}
 		
+		//Load display picture
+		FirebaseBackend.storage.getReference().child(arrBusinessNames.get(position)).child("ProfilePicture")
+				.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+			@Override
+			public void onSuccess(Uri uri) {
+				String url = uri.toString();
+				Glide.with(context.getApplicationContext()).load(url).into(holder.business_preview);
+			}
+		}).addOnFailureListener(new OnFailureListener() {
+			@Override
+			public void onFailure(@NonNull Exception e) {
+				Log.e(TAG, "onFailure: ", e);
+			}
+		});
+		
 		//OnClicks
 		holder.contractorRecycler_parent_layout.setOnClickListener(new View.OnClickListener() {
 			@Override
