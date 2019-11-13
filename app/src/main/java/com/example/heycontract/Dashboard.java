@@ -49,6 +49,9 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	private static final String TAG = "Dashboard";
 	
 	//Fragments
+	public static Profile profile;
+	public static Tenants tenants;
+	public static Properties properties;
 	public static PropertyInfo propertyInfo;
 	public static RequestDetails requestDetails;
 	public static GetAQuote getAQuote;
@@ -119,13 +122,11 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 						break;
 					
 					case R.id.bottomnav_properties:
-						Properties properties = new Properties();
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, properties);
 						fragmentTransaction.commit();
 						break;
 					
 					case R.id.bottomnav_tenants:
-						Tenants tenants = new Tenants();
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, tenants);
 						fragmentTransaction.commit();
 						break;
@@ -137,7 +138,6 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 						break;
 					
 					case R.id.bottomnav_profile:
-						Profile profile = new Profile();
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, profile);
 						fragmentTransaction.commit();
 						break;
@@ -157,6 +157,9 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	
 	private void init() {
 		//Init
+		profile = new Profile();
+		tenants = new Tenants();
+		properties = new Properties();
 		propertyInfo = new PropertyInfo();
 		requestDetails = new RequestDetails();
 		getAQuote = new GetAQuote();
@@ -291,7 +294,12 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 			fragmentTransaction = fm.beginTransaction();
 			fragmentTransaction.replace(R.id.dashboard_fragment_container, home);
 			fragmentTransaction.commit();
-		} else if((notificationsFragment != null)&&(notificationsFragment.isVisible())){
+		} else if((propertyInfo!=null)&&(propertyInfo.isVisible())){
+			fm = getSupportFragmentManager();
+			fragmentTransaction = fm.beginTransaction();
+			fragmentTransaction.replace(R.id.dashboard_fragment_container,properties);
+			fragmentTransaction.commit();
+		}else if((notificationsFragment != null)&&(notificationsFragment.isVisible())){
 			fm = getSupportFragmentManager();
 			fragmentTransaction = fm.beginTransaction();
 			fragmentTransaction.replace(R.id.dashboard_fragment_container, home);

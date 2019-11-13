@@ -59,7 +59,6 @@ public class GetAQuote extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		init();
-		getCurrentUsername();
 		//OnClicks
 		btnSendRequest.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -99,6 +98,7 @@ public class GetAQuote extends Fragment {
 		backend.initDB();
 		backend.initAuth();
 		backend.initStorage();
+		getCurrentUsername();
 		setInfo();
 	}
 	
