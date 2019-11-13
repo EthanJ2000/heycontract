@@ -116,10 +116,10 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 				switch (menuItem.getItemId())
 				{
 					
-					case R.id.bottomnav_home:
-						fragmentTransaction.replace(R.id.dashboard_fragment_container, home);
-						fragmentTransaction.commit();
-						break;
+//					case R.id.bottomnav_home:
+//						fragmentTransaction.replace(R.id.dashboard_fragment_container, home);
+//						fragmentTransaction.commit();
+//						break;
 					
 					case R.id.bottomnav_properties:
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, properties);
@@ -132,7 +132,6 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 						break;
 					
 					case R.id.bottomnav_jobs:
-						jobs = new Jobs();
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, jobs);
 						fragmentTransaction.commit();
 						break;
@@ -143,7 +142,6 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 						break;
 						
 					case R.id.bottomnav_requests:
-						requests = new Requests();
 						fragmentTransaction.replace(R.id.dashboard_fragment_container, requests);
 						fragmentTransaction.commit();
 						
@@ -157,6 +155,8 @@ public class Dashboard extends AppCompatActivity implements InternetConnectivity
 	
 	private void init() {
 		//Init
+		jobs = new Jobs();
+		requests = new Requests();
 		profile = new Profile();
 		tenants = new Tenants();
 		properties = new Properties();

@@ -136,7 +136,7 @@ public class RequestDetails extends Fragment {
 	
 	private void addInfo() {
 		detailsDisplayName.setText(name);
-		
+		Log.i(TAG, "addInfo: "+Dashboard.accountType);
 		if (Dashboard.accountType.equals("Landlord")){
 //		loadPicture();
 		btnDeclineQuote.setVisibility(View.GONE);
@@ -150,7 +150,6 @@ public class RequestDetails extends Fragment {
 
 		}
 		
-		if (Dashboard.accountType.equals("Contractor")){
 			FirebaseBackend.dbRef.child("Requests").addListenerForSingleValueEvent(new ValueEventListener() {
 				@Override
 				public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -173,7 +172,7 @@ public class RequestDetails extends Fragment {
 				}
 			});
 			
-		}
+	
 		
 	}
 	

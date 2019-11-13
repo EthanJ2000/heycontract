@@ -69,6 +69,8 @@ public class Properties extends Fragment {
 	
 	private void init() {
 		//Init
+		arrAddress.clear();
+		arrFeatures.clear();
 		instance = this;
 		txtNoProperties_Properties = getView().findViewById(R.id.txtNoProperties_Properties);
 		loadingWheel_Properties = getView().findViewById(R.id.loadingWheel_Properties);

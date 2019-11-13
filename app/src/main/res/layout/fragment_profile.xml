@@ -182,7 +182,7 @@
                     android:layout_marginEnd="32dp"
                     android:drawableRight="@drawable/editfield_pencil"
                     android:hint="@string/Address"
-                    android:imeOptions="actionDone" />
+                    android:imeOptions="actionGo" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

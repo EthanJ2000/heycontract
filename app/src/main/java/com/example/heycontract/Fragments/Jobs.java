@@ -201,5 +201,11 @@ public class Jobs extends Fragment {
 		loadingWheel_Jobs.setVisibility(View.GONE);
 	}
 	
+	public void initActiveJobsRecyclerView(){
+		RequestAdapter requestAdapter = new RequestAdapter(arrActiveJobs,getContext());
+		activejobs_recyclerview.setAdapter(requestAdapter);
+		activejobs_recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+	}
+	
 }
 

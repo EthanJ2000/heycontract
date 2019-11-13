@@ -68,6 +68,8 @@ public class Tenants extends Fragment {
 	
 	private void init() {
 		//Init
+		arrTenants.clear();
+		arrAddresses.clear();
 		txtNoProperties_Tenants = getView().findViewById(R.id.txtNoProperties_Tenants);
 		loadingWheel_Tenants = getView().findViewById(R.id.loadingWheel_Tenants);
 		loadingWheel_Tenants.setVisibility(View.VISIBLE);
